@@ -179,6 +179,9 @@
 | Social Network (Twitter) | ✅ | 12-Java-System-Design.md |
 | E-commerce | ✅ | 12-Java-System-Design.md |
 | Video Platform (YouTube) | ✅ | 12-Java-System-Design.md |
+| Payment (Paypal) | ✅ | 12-Java-System-Design.md |
+| Booking (Alibaba) | ✅ | 12-Java-System-Design.md |
+| Live Chating | ✅ | 12-Java-System-Design.md |
 
 ## ✅ Spring Boot
 
