@@ -1,9 +1,10 @@
 # راهنمای کاربردی دیزاین پترن‌های پرکاربرد در جاوا
 
-این فایل برای فالکون (برنامه‌نویس جاوا و علاقه‌مند به بازی‌سازی) آماده شده تا بداند **کِی** و **چرا** از هر دیزاین پترن استفاده کند.
+``دیزاین پترن`` یا ``الگوی طراحی``، یک راه حل کلی و قابل تکرار برای حل یک مشکل رایج در طراحی نرمافزار است، که به جای کدنویسی از صفر، یک قالب یا نقشهٔ اثبات شده برای ساختاردهی کد و بهبود انعطافپذیری و نگهداری آن در اختیار برنامهنویس قرار میدهد.
 
 ساختار:
-- برای هر الگو:
+
+- **برای هر الگو**:
   - مشکلِ رایج (نشانه استفاده)
   - راه‌حل (ایده پترن)
   - مثال ساده در جاوا
@@ -899,6 +900,66 @@ class PaymentProcessor {
 **معایب:**
 - افزایش تعداد کلاس‌ها.
 
+### **مثال کامل**: ``مسیر حرکت``
+
+```java
+// Strategy interface
+public interface RouteStrategy
+{
+    void buildRoute(String from, String to);
+}
+
+// Navigator
+public class Navigator
+{
+    private RouteStrategy routeStrategy;
+
+    public void setRouteStrategy(RouteStrategy routeStrategy)
+    {
+        this.routeStrategy = routeStrategy;
+    }
+
+    // Wrapper (⬇️)
+    public void buildRoute(String from, String to)
+    {
+        this.routeStrategy.buildRoute(from, to);
+    }
+}
+
+// Car Concerete
+public class CarRouteStrategy implements RouteStrategy
+{
+    @Override
+    public void buildRoute(String from, String to)
+    {
+        System.out.println("Driving...");
+    }
+}
+
+// Walking Concerete
+public class WalkingRouteStrategy implements RouteStrategy
+{
+    @Override
+    public void buildRoute(String from, String to)
+    {
+        System.out.println("Walking...");
+    }
+}
+
+// Main
+public class Main
+{
+    public static void main(String[] args)
+    {
+        RouteStrategy carStrategy = new CarRouteStrategy();
+
+        Navigator navigator = new Navigator();
+        navigator.setRouteStrategy(carStrategy);
+        navigator.buildRoute("Tehran", "Qazvin");
+    }
+}
+```
+
 ---
 
 ### 3.2 ``Observer``
@@ -997,6 +1058,109 @@ class InputHandler {
 
 **معایب:**
 - افزایش تعداد کلاس‌های کوچک.
+
+### **مثال کامل**: ``تلویزیون``
+
+```java
+// Command
+public interface Command
+{
+    void execute();
+}
+
+// Receiver
+public class Television
+{
+    public void turnOn()
+    {
+        System.out.println("TV is on.");
+    }
+
+    public void turnOff()
+    {
+        System.out.println("TV is off.");
+    }
+}
+
+// Concerete Command
+public class TurnOnCommand implements Command
+{
+    private Television television;
+
+    public TurnOnCommand(Television television)
+    {
+        this.television = television;
+    }
+
+    // Wrappper
+    @Override
+    public void execute()
+    {
+        this.television.turnOn();
+    }
+}
+
+// Concerete Command
+public class TurnOffCommand implements Command
+{
+    private Television television;
+    
+    public TurnOffCommand(Television television)
+    {
+        this.television = television;
+    }
+
+    @Override
+    public void execute()
+    {
+        this.television.turnOff();
+    }
+}
+
+// Invoker
+public class RemoteControllerInvoker implements Command
+{
+    private Command command;
+
+    public void setCommand(Command command)
+    {
+        this.command = command;
+    }
+
+    @Override
+    public void execute()
+    {
+        this.command.execute();
+    }
+}
+
+// Main
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Television television = new Television();
+
+        Command turnOn = new TurnOnCommand(television);
+        Command turnOff = new TurnOffCommand(television);
+        Command volumeUp = new VolumeUpCommand(television);
+        Command volumeDown = new VolumeDownCommand(television);
+
+        RemoteControllerInvoker remote = new RemoteControllerInvoker();
+        remote.setCommand(turnOn);
+        remote.execute();
+
+        remote.setCommand(turnOff);
+        remote.execute();
+
+        remote.setCommand(volumeUp);
+        remote.execute();
+
+        remote.setCommand(volumeDown);
+        remote.execute();
+    }
+}
+```
 
 ---
 
@@ -1170,8 +1334,165 @@ class Player {
 **مزایا:**
 - حذف if-elseهای مربوط به وضعیت.
 
-**معایب:**
+**معایب:*
 - افزایش تعداد کلاس‌ها.
+
+### **مثال کامل**: ``ثبت مقاله در سایت``
+
+```java
+// State
+public interface DocumentState
+{
+    void publish();
+
+    void render();
+
+    void approve();
+}
+
+// Document
+public class Document
+{
+    private DocumentState documentState;
+
+    public Document()
+    {
+        // Always Draft for first
+        this.documentState = new DraftState(this);
+    }
+
+    public void changeState(DocumentState state)
+    {
+        this.documentState = state;
+    }
+
+    public void publish()
+    {
+        this.documentState.publish();
+    }
+
+    public void render()
+    {
+        this.documentState.render();
+    }
+
+    public void approve()
+    {
+        this.documentState.approve();
+    }
+}
+
+// Draft
+public class DraftState implements DocumentState
+{
+    private Document document;
+
+    public DraftState(Document document)
+    {
+        this.document = document;
+    }
+
+    @Override
+    public void approve()
+    {
+        System.out.println("Draft can not be Approved...");
+    }
+
+    @Override
+    public void publish()
+    {
+        System.out.println("Document is send moderation...");
+        this.document.changeState(new ModerationState(document));
+    }
+
+    @Override
+    public void render()
+    {
+        System.out.println("Document Render...");
+    }
+}
+
+// Moderation
+public class ModerationState implements DocumentState
+{
+    private Document document;
+
+    public ModerationState(Document document)
+    {
+        this.document = document;
+    }
+
+    @Override
+    public void approve()
+    {
+        System.out.println("Document approve and publish...");
+        this.document.changeState(new PublishState(document));
+    }
+
+    @Override
+    public void publish()
+    {
+        System.out.println("Document is waiting for approval...");
+    }
+
+    @Override
+    public void render()
+    {
+        System.out.println("Rendering document under moderation state...");
+    }
+}
+
+// Publish
+public class PublishState implements DocumentState
+{
+    private Document document;
+
+    public PublishState(Document document)
+    {
+        this.document = document;
+    }
+
+    @Override
+    public void approve()
+    {
+        System.out.println("Document is already approced");
+    }
+
+    @Override
+    public void publish()
+    {
+        System.out.println("Document is already published");
+    }
+
+    @Override
+    public void render()
+    {
+        System.out.println("Rendering published document...");
+    }
+}
+
+// Main
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Document document = new Document();
+
+        // Draft
+        document.render();
+        document.publish();
+
+        // Moderation
+        document.render();
+        document.publish();
+        document.approve();
+
+        // Publish
+        document.render();
+        document.publish();
+    }
+}
+```
 
 ---
 
