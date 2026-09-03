@@ -261,6 +261,8 @@ class EnemyFactory {
 - اگر شرط‌ها زیاد شوند، خود کارخانه می‌تواند شلوغ شود.
 - هنوز هم برای هر نوع جدید باید کارخانه را تغییر دهید (نقض جزئی Open/Closed).
 
+### **مثال کامل**: ````
+
 ---
 
 ### 1.3 ``Abstract Factory``
@@ -397,6 +399,171 @@ Character hero = new Character.Builder()
 **معایب:**
 - کلاس اضافی (Builder) نیاز دارد.
 - برای اشیاء ساده، ممکن است غیرضروری باشد.
+
+### **مثال کامل**: ``ساخت خانه``
+
+```java
+// Product
+public class House implements HousePlan {
+
+    private String basement;
+    private String structure;
+    private String roof;
+    private String interior;
+
+    @Override
+    public void setBasement(String basement) {
+        this.basement = basement;
+    }
+
+    @Override
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
+
+    @Override
+    public void setRoof(String roof) {
+        this.roof = roof;
+    }
+
+    @Override
+    public void setInterior(String interior) {
+        this.interior = interior;
+    }
+
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "basement='" + basement + '\'' +
+                ", structure='" + structure + '\'' +
+                ", roof='" + roof + '\'' +
+                ", interior='" + interior + '\'' +
+                '}';
+    }
+}
+
+// Builder Interface
+public interface HouseBuilder {
+    void buildBasement();
+    void buildStructure();
+    void buildRoof();
+    void buildInterior();
+
+    House getHouse();
+}
+
+// Concrete Builders
+public class IglooHouseBuilder implements HouseBuilder {
+    private House house;
+
+    public IglooHouseBuilder() {
+        this.house = new House();
+    }
+
+    @Override
+    public void buildBasement() {
+        house.setBasement("ice");
+    }
+
+    @Override
+    public void buildStructure() {
+        house.setStructure("ice");
+    }
+
+    @Override
+    public void buildRoof() {
+        house.setRoof("ice");
+    }
+
+    @Override
+    public void buildInterior() {
+        house.setInterior("ice");
+    }
+
+    @Override
+    public House getHouse() {
+        return house;
+    }
+}
+
+public class TipiHouseBuilder implements HouseBuilder {
+    private House house;
+
+    public TipiHouseBuilder() {
+        this.house = new House();
+    }
+
+    @Override
+    public void buildBasement() {
+        house.setBasement("wood");
+    }
+
+    @Override
+    public void buildStructure() {
+        house.setStructure("wood");
+    }
+
+    @Override
+    public void buildRoof() {
+        house.setRoof("wood");
+    }
+
+    @Override
+    public void buildInterior() {
+        house.setInterior("wood");
+    }
+
+    @Override
+    public House getHouse() {
+        return house;
+    }
+}
+
+// Director
+public class CivilEngineer {
+    private HouseBuilder houseBuilder;
+
+    public CivilEngineer(HouseBuilder houseBuilder) {
+        this.houseBuilder = houseBuilder;
+    }
+
+    public House getHouse() {
+        return this.houseBuilder.getHouse();
+    }
+
+    public void constructHouse() {
+        this.houseBuilder.buildBasement();
+        this.houseBuilder.buildStructure();
+        this.houseBuilder.buildRoof();
+        this.houseBuilder.buildInterior();
+    }
+}
+
+// Main
+public class Main {
+    public static void main(String[] args) {
+        HouseBuilder iglooBuilder = new IglooHouseBuilder();
+        CivilEngineer engineer = new CivilEngineer(iglooBuilder);
+
+        engineer.constructHouse();
+
+        House house = engineer.getHouse();
+
+        System.out.println(house);
+
+        StringBuilder builder = new StringBuilder("Hello");
+
+        String data = builder.append(1)
+                .append(true)
+                .append("friend")
+                .toString();
+
+        System.out.println(data);
+
+    }
+}
+```
 
 ---
 
