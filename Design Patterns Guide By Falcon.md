@@ -12,18 +12,22 @@
   - معایب / هشدارها
 
 ## ۱. ``Creational`` (ایجادی)
+
 این الگوها به نحوه ساخته شدن اشیاء می‌پردازند. کارشان این است که فرایند new کردن را هوشمندانه‌تر کنند تا سیستم از جزئیات ساخت شیء بی‌خبر باشد و کد انعطاف‌پذیرتر شود.
 مثال معروف: ``Singleton`` (تضمین یک نمونه منحصربه‌فرد)، ``Factory`` (ساخت اشیاء بدون مشخص کردن کلاس دقیق آنها).
 
 ## ۲. ``Structural`` (ساختاری)
+
 این الگوها به ترکیب کلاس‌ها و اشیاء برای ساختن ساختارهای بزرگ‌تر می‌پردازند. هدفشان این است که با استفاده از ارث‌بری یا ترکیب، رابط‌های ساده‌تری برای کار با سیستم‌های پیچیده فراهم کنند.
 مثال معروف: ``Adapter`` (هماهنگ‌کننده دو رابط ناسازگار)، ``Decorator`` (افزودن قابلیت جدید به اشیاء به صورت پویا).
 
 ## ۳. ``Behavioral`` (رفتاری)
+
 این الگوها به ارتباط و تعامل بین اشیاء می‌پردازند. کارشان تخصیص مسئولیت‌ها بین اشیاء و مدیریت الگوریتم‌ها و جریان داده است تا ارتباطات به هم گره نخورده و قابل توسعه باشند.
 مثال معروف: ``Observer`` (اعلام تغییرات به اشیاء وابسته)، ``Strategy`` (تغییر الگوریتم در زمان اجرا).
 
 ## ۴. ``Concurrency`` (هم‌روندی / هم‌زمانی)
+
 این الگوها به مدیریت هم‌زمانی و چندنخی (Multi-threading) می‌پردازند. کارشان این است که به اشیاء کمک کنند در محیط‌های هم‌روند (که چندین کار با هم اجرا می‌شوند) بدون بروز مشکل کار کنند و از تداخل نخ‌ها جلوگیری شود.
 
 مثال معروف: Active Object (جداسازی اجرای متد از فراخوانی آن در نخ جداگانه)، Monitor Object (همگام‌سازی دسترسی به متدهای یک شیء).
@@ -35,6 +39,7 @@
 # ۲۳ الگوی کلاسیک
 
 ### [1-Singleton](#11-singleton)
+
 فقط یک نمونه از کلاس در کل برنامه بساز و یک نقطه دسترسی سراسری به آن بده.
 **(مثال: مدیریت اتصال پایگاه داده)**
 
@@ -199,13 +204,56 @@ public class GameConfig {
 ```
 
 **مزایا:**
+
 - کنترل کامل روی تعداد نمونه‌ها (فقط یکی).
 - مناسب برای مدیریت تنظیمات سراسری.
 
 **معایب:**
+
 - اگر زیاد استفاده شود، تبدیل به **Global Variable** می‌شود.
 - تست‌نویسی (Unit Test) را سخت می‌کند.
 - وابستگی پنهان در سیستم ایجاد می‌کند.
+
+### **مثال کامل**: ``انتخاب کاپیتان``
+
+```java
+// Singleton
+public final class Captain {
+    private static Captain captain;
+
+    private Captain() {
+
+    }
+
+    public static synchronized Captain getInstance(){
+        if (captain == null){
+            captain = new Captain();
+            System.out.println("New Captain is elected for your team");
+        }
+        else {
+            System.out.println("You already have a Captain for your team");
+            System.out.println("Send him for the toss");
+        }
+
+        return captain;
+    }
+}
+
+// CLient
+public class App 
+{
+    public static void main( String[] args )
+    {
+        Captain captain1 = Captain.getInstance();
+
+        Captain captain2 = Captain.getInstance();
+
+        if (captain1 == captain2) {
+            System.out.println("Captains are equal");
+        }
+    }
+}
+```
 
 ---
 
@@ -254,14 +302,98 @@ class EnemyFactory {
 ```
 
 **مزایا:**
+
 - کد اصلی از جزئیات ساخت اشیاء جدا می‌شود.
 - افزودن نوع جدید را ساده‌تر می‌کند (با کمی تغییر در کارخانه).
 
 **معایب:**
+
 - اگر شرط‌ها زیاد شوند، خود کارخانه می‌تواند شلوغ شود.
 - هنوز هم برای هر نوع جدید باید کارخانه را تغییر دهید (نقض جزئی Open/Closed).
 
-### **مثال کامل**: ````
+### **مثال کامل**: ``رابط حمل و نقل``
+
+```java
+// Product
+public interface Transport {
+    void deliver();
+}
+
+// Concrete Products
+public class Truck implements Transport {
+    @Override
+    public void deliver() {
+        System.out.println("Delivering by truck...");
+    }
+}
+
+public class Ship implements Transport {
+    @Override
+    public void deliver() {
+        System.out.println("Delivering by ship...");
+    }
+}
+
+public class Airplane implements Transport {
+    @Override
+    public void deliver() {
+        System.out.println("Delivering by airplane...");
+    }
+}
+
+// Creator
+public abstract class Logistics {
+    protected abstract Transport createTransport();
+
+    //core business logic
+    public void planDelivery(){
+        Transport transport = createTransport();
+        transport.deliver();
+    }
+}
+
+// Concrete Creators
+public class RoadLogistics extends Logistics {
+    @Override
+    protected Transport createTransport() {
+        return new Truck();
+    }
+}
+
+public class SeaLogistics extends Logistics {
+    @Override
+    protected Transport createTransport() {
+        return new Ship();
+    }
+}
+
+public class SkyLogistics extends Logistics {
+    @Override
+    protected Transport createTransport() {
+        return new Airplane();
+    }
+}
+
+// Client
+public class Main {
+    public static void main(String[] args) {
+        Logistics logistics;
+
+        //Road transportation
+        logistics = new RoadLogistics();
+
+        logistics.planDelivery();
+
+        //Sea transportation
+        logistics= new SeaLogistics();
+        logistics.planDelivery();
+
+        //sky logistics
+        logistics = new SkyLogistics();
+        logistics.planDelivery();
+    }
+}
+```
 
 ---
 
@@ -312,10 +444,12 @@ class MacFactory implements GUIFactory {
 ```
 
 **مزایا:**
+
 - تضمین می‌کند اشیاء مربوط به هم، هماهنگ ساخته شوند.
 - وابستگی به اینترفیس‌ها، نه پیاده‌سازی‌ها.
 
 **معایب:**
+
 - برای پروژه‌های کوچک، اضافه‌کاری محسوب می‌شود.
 - ساختار کلاس‌ها زیاد می‌شود.
 
@@ -332,6 +466,7 @@ class MacFactory implements GUIFactory {
 ```java
 new Character("Player1", 100, 20, 5, true, false, true, 0.2, "RANGER", ... );
 ```
+
 این‌جا:
 
 - خوندن و فهمیدن این سازنده سخت شده
@@ -393,10 +528,12 @@ Character hero = new Character.Builder()
 ```
 
 **مزایا:**
+
 - خوانایی بالا، مخصوصاً برای اشیاء پیچیده.
 - جلوگیری از سازنده‌های طولانی.
 
 **معایب:**
+
 - کلاس اضافی (Builder) نیاز دارد.
 - برای اشیاء ساده، ممکن است غیرضروری باشد.
 
@@ -610,10 +747,12 @@ Enemy clonedOrc = orc.clone();
 ```
 
 **مزایا:**
+
 - ایجاد اشیاء جدید سریع‌تر از ساخت از صفر.
 - مناسب برای سیستم‌هایی مانند بازی که دشمن‌های مشابه زیاد دارد.
 
 **معایب:**
+
 - پیاده‌سازی `clone()` در جاوا کمی حساس و پیچیده است.
 - برای اشیاء دارای وابستگی عمیق (Deep Copy)، دقت زیادی لازم است.
 
@@ -665,10 +804,12 @@ class InputAdapter implements GameInput {
 ```
 
 **مزایا:**
+
 - اتصال کد قدیمی به کتابخانه‌های جدید بدون تغییرِ هسته.
 - جداسازی وابستگی‌ها.
 
 **معایب:**
+
 - اگر زیاد استفاده شود، تعداد کلاس‌ها زیاد می‌شود.
 - می‌تواند ساختار را پیچیده کند.
 
@@ -727,10 +868,12 @@ class Circle {
 ```
 
 **مزایا:**
+
 - کاهش انفجار تعداد کلاس‌ها.
 - امکان تغییر مستقل دو بُعد (مثلاً نوع رندر و نوع شکل).
 
 **معایب:**
+
 - ساختار اولیه کمی پیچیده‌تر است.
 
 ---
@@ -778,10 +921,12 @@ class Group implements GameObject {
 ```
 
 **مزایا:**
+
 - یکسان شدن کار با تکی و مجموعه.
 - مناسب برای ساختارهای صحنه (Scene Graph).
 
 **معایب:**
+
 - اشکال‌زدایی ساختارهای پیچیده ممکن است سخت شود.
 
 ---
@@ -830,10 +975,12 @@ class FireDecorator implements Weapon {
 ```
 
 **مزایا:**
+
 - افزودن رفتار بدون تغییر کلاس اصلی.
 - ترکیب‌پذیری بالا (مثلاً Fire + Ice + Poison).
 
 **معایب:**
+
 - ممکن است زنجیره‌ی دکوراتورها پیچیده شود.
 - ردیابی رفتار واقعی سخت می‌شود.
 
@@ -878,10 +1025,12 @@ class GameEngineFacade {
 ```
 
 **مزایا:**
+
 - ساده‌سازی استفاده از سیستم‌های پیچیده.
 - مناسب برای APIهای سطح بالا.
 
 **معایب:**
+
 - اگر بیش از حد بزرگ شود، خودش تبدیل به God Object می‌شود.
 
 ---
@@ -922,9 +1071,11 @@ class Tree {
 ```
 
 **مزایا:**
+
 - کاهش مصرف حافظه.
 
 **معایب:**
+
 - پیچیدگی در مدیریت داده‌های مشترک و اختصاصی.
 
 ---
@@ -987,9 +1138,11 @@ class ImageProxy implements Image {
 ```
 
 **مزایا:**
+
 - کنترل دسترسی، Lazy Loading، کش‌کردن.
 
 **معایب:**
+
 - افزودن یک لایهٔ اضافی بین کلاینت و شیء اصلی.
 
 ---
@@ -1007,6 +1160,7 @@ if (type.equals("CREDIT_CARD")) { ... }
 else if (type.equals("PAYPAL")) { ... }
 else if (type.equals("CRYPTO")) { ... }
 ```
+
 و هر جا، همین داستان تکرار می‌شه.
 
 این نشونه‌ی اینه که:
@@ -1061,10 +1215,12 @@ class PaymentProcessor {
 ```
 
 **مزایا:**
+
 - جلوگیری از `if-else`های طولانی.
 - امکان تغییر رفتار در زمان اجرا.
 
 **معایب:**
+
 - افزایش تعداد کلاس‌ها.
 
 ### **مثال کامل**: ``مسیر حرکت``
@@ -1172,9 +1328,11 @@ class Player {
 ```
 
 **مزایا:**
+
 - Loose Coupling بین Subject و Observerها.
 
 **معایب:**
+
 - ممکن است چرخه‌های پیچیده‌ای از اطلاع‌رسانی ایجاد شود.
 
 ---
@@ -1221,9 +1379,11 @@ class InputHandler {
 ```
 
 **مزایا:**
+
 - مناسب برای Undo/Redo و Queue از دستورات.
 
 **معایب:**
+
 - افزایش تعداد کلاس‌های کوچک.
 
 ### **مثال کامل**: ``تلویزیون``
@@ -1359,9 +1519,11 @@ while (it.hasNext()) {
 ```
 
 **مزایا:**
+
 - ساده‌سازی پیمایش روی ساختارهای مختلف.
 
 **معایب:**
+
 - تقریباً همیشه ضمنی در جاوا استفاده می‌شود.
 
 ---
@@ -1395,9 +1557,11 @@ abstract class Component {
 ```
 
 **مزایا:**
+
 - کاهش وابستگی مستقیم بین کلاس‌ها.
 
 **معایب:**
+
 - Mediator ممکن است خیلی بزرگ و پیچیده شود.
 
 ---
@@ -1444,9 +1608,11 @@ class Game {
 ```
 
 **مزایا:**
+
 - پیاده‌سازی Undo/Save در بازی‌ها.
 
 **معایب:**
+
 - مصرف حافظه زیاد اگر وضعیت‌ها بزرگ باشند.
 
 ---
@@ -1499,9 +1665,11 @@ class Player {
 ```
 
 **مزایا:**
+
 - حذف if-elseهای مربوط به وضعیت.
 
 **معایب:*
+
 - افزایش تعداد کلاس‌ها.
 
 ### **مثال کامل**: ``ثبت مقاله در سایت``
@@ -1696,9 +1864,11 @@ abstract class GameLoop {
 ```
 
 **مزایا:**
+
 - اشتراک الگوریتم کلی، جلوگیری از تکرار کد.
 
 **معایب:**
+
 - وابستگی به ارث‌بری (Inheritance).
 
 ---
@@ -1733,9 +1903,11 @@ interface Element {
 ```
 
 **مزایا:**
+
 - افزودن عملیات جدید بدون تغییر کلاس‌های موجود.
 
 **معایب:**
+
 - اگر انواع جدیدی از Element اضافه کنید، باید Visitorها را تغییر دهید.
 
 ---
@@ -1782,9 +1954,11 @@ class AuthHandler extends Handler {
 ```
 
 **مزایا:**
+
 - انعطاف بالا در تعیین ترتیب و نوع Handlerها.
 
 **معایب:**
+
 - دیباگ کردن مسیر عبور درخواست گاهی سخت است.
 
 ---
