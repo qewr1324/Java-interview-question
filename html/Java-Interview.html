@@ -1,0 +1,4309 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کتابچه مصاحبه جونیور جاوا</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/properties.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 12mm 12mm 12mm 12mm;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Vazirmatn', 'Tahoma', system-ui, sans-serif;
+            background: #eef2f6;
+            color: #1e293b;
+            padding: 2rem 1.5rem;
+            line-height: 1.75;
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .book {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        /* ========== صفحه ========== */
+        .page {
+            padding: 2rem 2.4rem 2.6rem 2.4rem;
+            position: relative;
+            page-break-after: always;
+            break-after: page;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+            break-after: auto;
+        }
+
+        .page-separator {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0.5rem 0;
+            padding: 0.4rem 2.4rem;
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-top: 1px dashed #cbd5e1;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .page-separator .sep-line {
+            flex: 1;
+            height: 1px;
+            background: #cbd5e1;
+        }
+
+        .page-separator .sep-label {
+            background: #0d9488;
+            color: #fff;
+            padding: 0.15rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.72rem;
+        }
+
+        .page-separator .sep-title {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.6rem;
+            border-bottom: 4px solid #0d9488;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h1 .phase-num {
+            background: #0d9488;
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0d9488;
+            margin-top: 1.4rem;
+            margin-bottom: 0.8rem;
+            border-right: 6px solid #0d9488;
+            padding-right: 0.9rem;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            page-break-after: avoid;
+        }
+
+        h3::before {
+            content: "◆";
+            color: #0d9488;
+            font-size: 0.8rem;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 1rem 1.3rem;
+            margin: 1rem 0;
+            border: 1px solid #e2e8f0;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #0d9488;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.7rem;
+            border-radius: 50px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .q {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .a {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 0.6rem;
+        }
+
+        .note {
+            background: #fef9c3;
+            border-right: 5px solid #eab308;
+            padding: 0.7rem 1.1rem;
+            border-radius: 10px;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            color: #713f12;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: 'Fira Code', 'Consolas', monospace;
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            direction: ltr;
+            display: inline-block;
+            border: 1px solid #e2e8f0;
+        }
+
+        pre {
+            background: #f8fafc;
+            padding: 0.9rem 1.1rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            direction: ltr;
+            text-align: left;
+            margin: 0.7rem 0;
+            border: 1px solid #e2e8f0;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: transparent !important;
+            padding: 0 !important;
+            border: none !important;
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.9rem 0;
+            font-size: 0.88rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: #0d9488;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.6rem 0.5rem;
+            text-align: center;
+        }
+
+        td {
+            padding: 0.5rem 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fff;
+            text-align: center;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        ul,
+        ol {
+            padding-right: 1.4rem;
+            margin: 0.5rem 0;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .cover {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: 250mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            page-break-after: always;
+        }
+
+        .cover h1 {
+            color: #fff;
+            border: none;
+            font-size: 2.3rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+
+        .cover .subtitle {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cover .toc {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+            text-align: right;
+            max-width: 550px;
+            width: 100%;
+        }
+
+        .cover .toc h2 {
+            color: #fff;
+            border: none;
+            padding: 0;
+            margin: 0 0 0.8rem 0;
+            font-size: 1.05rem;
+        }
+
+        .cover .toc ol {
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .cover .toc li {
+            margin-bottom: 0.35rem;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: #0d9488;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 0.9rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px -6px #0d9488;
+            z-index: 1000;
+            font-family: inherit;
+        }
+
+        .print-btn:hover {
+            background: #0f766e;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 12mm 12mm 12mm;
+            }
+
+            html,
+            body {
+                background: #fff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 10.5pt;
+                line-height: 1.55;
+                color: #000;
+            }
+
+            .book {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: transparent !important;
+            }
+
+            .page {
+                padding: 0 !important;
+                margin: 0 !important;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            .page-separator {
+                display: none !important;
+            }
+
+            .card,
+            pre,
+            table,
+            .note {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                box-shadow: none !important;
+                margin: 0.5rem 0 !important;
+            }
+
+            .card {
+                padding: 0.7rem 1rem !important;
+                border: 1px solid #cbd5e1 !important;
+                background: #fff !important;
+            }
+
+            pre {
+                background: #f8fafc !important;
+                border: 1px solid #cbd5e1 !important;
+                font-size: 8pt !important;
+                padding: 0.55rem 0.85rem !important;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            pre code {
+                font-size: 8pt !important;
+            }
+
+            code {
+                background: #f1f5f9 !important;
+                border: 1px solid #e2e8f0 !important;
+                font-size: 8pt !important;
+            }
+
+            table {
+                font-size: 8.5pt !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+            }
+
+            th {
+                background: #0d9488 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 0.4rem 0.4rem !important;
+                font-size: 8.5pt !important;
+            }
+
+            td {
+                padding: 0.35rem 0.4rem !important;
+                font-size: 8.5pt !important;
+                border-bottom: 1px solid #e2e8f0 !important;
+            }
+
+            .note {
+                background: #fef9c3 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                border-right: 4px solid #eab308 !important;
+                padding: 0.5rem 0.85rem !important;
+                font-size: 8.5pt !important;
+            }
+
+            .badge {
+                background: #0d9488 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 7pt !important;
+            }
+
+            h1 {
+                font-size: 14pt !important;
+                border-bottom: 2px solid #0d9488 !important;
+                padding-bottom: 0.3rem !important;
+                margin-bottom: 0.6rem !important;
+            }
+
+            h1 .phase-num {
+                background: #0d9488 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 10pt !important;
+                padding: 0.15rem 0.5rem !important;
+            }
+
+            h2 {
+                font-size: 11.5pt !important;
+                margin-top: 0.9rem !important;
+                margin-bottom: 0.4rem !important;
+                border-right: 4px solid #0d9488 !important;
+                padding-right: 0.5rem !important;
+                page-break-after: avoid !important;
+            }
+
+            h3 {
+                font-size: 10pt !important;
+                margin-top: 0.6rem !important;
+                margin-bottom: 0.3rem !important;
+                page-break-after: avoid !important;
+            }
+
+            h3::before {
+                font-size: 7pt !important;
+            }
+
+            p,
+            .a {
+                font-size: 9.5pt !important;
+                margin-bottom: 0.3rem !important;
+            }
+
+            .q {
+                font-size: 10pt !important;
+                margin-bottom: 0.3rem !important;
+            }
+
+            ul,
+            ol {
+                font-size: 9pt !important;
+                padding-right: 1.1rem !important;
+            }
+
+            li {
+                margin-bottom: 0.15rem !important;
+            }
+
+            .cover {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                page-break-after: always;
+                min-height: 250mm;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+        }
+
+        .hljs {
+            background: transparent !important;
+            color: #0f172a !important;
+            padding: 0 !important;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-literal,
+        .hljs-section {
+            color: #7c3aed !important;
+            font-weight: 600;
+        }
+
+        .hljs-string,
+        .hljs-attr,
+        .hljs-addition {
+            color: #16a34a !important;
+        }
+
+        .hljs-number,
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-variable {
+            color: #ea580c !important;
+        }
+
+        .hljs-comment,
+        .hljs-quote {
+            color: #64748b !important;
+            font-style: italic;
+        }
+
+        .hljs-title,
+        .hljs-name,
+        .hljs-type,
+        .hljs-title.class_ {
+            color: #0d9488 !important;
+            font-weight: 600;
+        }
+
+        .hljs-built_in,
+        .hljs-builtin-name {
+            color: #2563eb !important;
+        }
+
+        .hljs-meta,
+        .hljs-meta .hljs-keyword {
+            color: #9333ea !important;
+        }
+
+        .hljs-tag {
+            color: #0f172a !important;
+        }
+
+        .hljs-params {
+            color: #0f172a !important;
+        }
+
+        .hljs-property {
+            color: #0d9488 !important;
+        }
+
+        @media print {
+            .hljs-keyword {
+                color: #7c3aed !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-string {
+                color: #16a34a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-number {
+                color: #ea580c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-comment {
+                color: #64748b !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-title,
+            .hljs-type {
+                color: #0d9488 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-built_in {
+                color: #2563eb !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .hljs-meta {
+                color: #9333ea !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ چاپ کتابچه</button>
+
+    <div class="book">
+
+        <!-- ================= جلد ================= -->
+        <div class="cover">
+            <h1>📘 کتابچه مصاحبه جونیور جاوا</h1>
+            <div class="subtitle">از مبانی تا Spring Boot، پایگاه داده و امنیت</div>
+            <div class="toc">
+                <h2>فهرست مطالب</h2>
+                <ol>
+                    <li>مبانی جاوا (Data Types, Operators, Arrays)</li>
+                    <li>ورودی/خروجی (I/O)</li>
+                    <li>برنامه‌نویسی شی‌گرا (OOP)</li>
+                    <li>Exception, Generics, Collections</li>
+                    <li>برنامه‌نویسی تابعی و هم‌روندی</li>
+                    <li>ساختمان داده و الگوریتم</li>
+                    <li>شبکه‌های کامپیوتری</li>
+                    <li>سیستم عامل</li>
+                    <li>پایگاه داده (SQL, NoSQL)</li>
+                    <li>امنیت (JWT, OWASP)</li>
+                    <li>دیزاین پترن‌ها</li>
+                    <li>سوالات غیرفنی (HR)</li>
+                    <li>System Design (سطح جونیور)</li>
+                    <li>Spring Boot</li>
+                    <li>JDBC, JPA, Hibernate</li>
+                    <li>DevOps, Docker, Linux</li>
+                    <li>تست‌نویسی</li>
+                    <li>Thymeleaf, Maven, Logging</li>
+                    <li>Spring Advanced (Caching, Async, Validation)</li>
+                    <li>اصطلاحات زبان و فریمورک ها</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۱ ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱</span>
+                <span class="sep-title">فاز ۱: مبانی جاوا</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱</span> مبانی جاوا</h1>
+
+            <h2>۱.۱ انواع داده (Data Types)</h2>
+            <p>جاوا <strong>Statically Typed</strong> و <strong>Strongly Typed</strong> است. ۸ نوع اولیه (Primitive)
+                دارد که در Stack ذخیره می‌شوند:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>نوع</th>
+                        <th>سایز</th>
+                        <th>بازه</th>
+                        <th>پیش‌فرض</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>byte</td>
+                        <td>۱ بایت</td>
+                        <td>128- تا 127</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>short</td>
+                        <td>۲ بایت</td>
+                        <td>32,768- تا 32,767</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>int</td>
+                        <td>۴ بایت</td>
+                        <td>حدود ۲ میلیارد</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>long</td>
+                        <td>۸ بایت</td>
+                        <td>خیلی بزرگ</td>
+                        <td>0L</td>
+                    </tr>
+                    <tr>
+                        <td>float</td>
+                        <td>۴ بایت</td>
+                        <td>دقت ~۷ رقم</td>
+                        <td>0.0f</td>
+                    </tr>
+                    <tr>
+                        <td>double</td>
+                        <td>۸ بایت</td>
+                        <td>دقت ~۱۵ رقم</td>
+                        <td>0.0d</td>
+                    </tr>
+                    <tr>
+                        <td>char</td>
+                        <td>۲ بایت</td>
+                        <td>یک کاراکتر یونیکد</td>
+                        <td>'\u0000'</td>
+                    </tr>
+                    <tr>
+                        <td>boolean</td>
+                        <td>~۱ بیت</td>
+                        <td>true/false</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note"><strong>نکته:</strong> برای کارهای مالی از <code>float</code> و <code>double</code>
+                استفاده نکنید. از <code>BigDecimal</code> استفاده کنید.</div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">چرا <code>0.1 + 0.2</code> برابر 0.3 نیست؟</div>
+                <div class="a">به خاطر استاندارد IEEE 754. بعضی اعداد اعشاری دقیقاً در مبنای ۲ قابل نمایش نیستند.</div>
+                <pre><code class="language-java">// درست برای پول
+BigDecimal price = new BigDecimal("10.99");
+BigDecimal tax = new BigDecimal("0.20");
+BigDecimal total = price.add(price.multiply(tax)); // دقیق</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Boxing و Unboxing چیه؟</div>
+                <div class="a"><strong>Autoboxing:</strong> تبدیل خودکار Primitive به Wrapper.
+                    <strong>Unboxing:</strong> برعکس آن.
+                </div>
+                <pre><code class="language-java">Integer wrapper = 5; // Autoboxing
+int primitive = wrapper; // Unboxing</code></pre>
+                <div class="note"><strong>هشدار:</strong> Integer می‌تواند null باشد، پس موقع Unboxing ممکن است
+                    NullPointerException بخورید.</div>
+            </div>
+
+            <h3>انواع مرجع (Reference Data Types)</h3>
+            <ul>
+                <li>هر چیزی که Primitive نیست: کلاس‌ها، اینترفیس‌ها، آرایه‌ها، String و ...</li>
+                <li>در Stack ذخیره می‌شود و به شیء در Heap اشاره می‌کند.</li>
+                <li>مقدار پیش‌فرض: <code>null</code></li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت String با Primitiveها چیه؟</div>
+                <div class="a">String یک کلاس <strong>Immutable</strong> و Reference Type است. String Pool در Heap برای
+                    صرفه‌جویی در حافظه استفاده می‌شود.</div>
+                <pre><code class="language-java">String s1 = "hello";
+String s2 = "hello";
+System.out.println(s1 == s2); // true (String Pool)
+
+String s3 = new String("hello");
+System.out.println(s1 == s3); // false
+System.out.println(s1.equals(s3)); // true</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت String، StringBuilder و StringBuffer؟</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>String</th>
+                            <th>StringBuilder</th>
+                            <th>StringBuffer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>تغییرپذیری</td>
+                            <td>Immutable</td>
+                            <td>Mutable</td>
+                            <td>Mutable</td>
+                        </tr>
+                        <tr>
+                            <td>Thread-Safe</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td>سرعت</td>
+                            <td>کندترین</td>
+                            <td>سریع‌ترین</td>
+                            <td>متوسط</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۲ ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲</span>
+                <span class="sep-title">فاز ۱: مبانی جاوا (ادامه)</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h2>۱.۲ عملگرها (Operators)</h2>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">فرق <code>&gt;&gt;</code> و <code>&gt;&gt;&gt;</code>؟</div>
+                <div class="a">
+                    <code>&gt;&gt;</code> بیت علامت را حفظ می‌کند.<br>
+                    <code>&gt;&gt;&gt;</code> صفر به چپ اضافه می‌کند (نتیجه مثبت).
+                </div>
+                <pre><code class="language-java">int negative = -8;
+int signedShift = negative >> 2;   // -2
+int unsignedShift = negative >>> 2; // 1073741822</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q"><code>&amp;</code> و <code>&amp;&amp;</code> چه فرقی دارن؟</div>
+                <div class="a">
+                    <code>&amp;</code> هر دو طرف را ارزیابی می‌کند.<br>
+                    <code>&amp;&amp;</code> اتصال کوتاه (Short-circuit) دارد.
+                </div>
+                <pre><code class="language-java">if (false && getValue()) { } // getValue() اجرا نمی‌شود
+if (false & getValue()) { }  // getValue() اجرا می‌شود</code></pre>
+            </div>
+
+            <h2>۱.۳ ساختارهای کنترلی (Control Flow)</h2>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">فرق <code>for</code>، <code>for-each</code> و <code>while</code>؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>for سنتی:</strong> وقتی به ایندکس نیاز داری.</li>
+                        <li><strong>for-each:</strong> فقط خواندن عناصر.</li>
+                        <li><strong>while:</strong> تعداد تکرار مشخص نیست.</li>
+                        <li><strong>do-while:</strong> حداقل یک بار اجرا می‌شود.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>۱.۴ آرایه‌ها (Arrays)</h2>
+            <ul>
+                <li>طول ثابت (Fixed Size) در Heap.</li>
+                <li>نوع همه خانه‌ها یکسان.</li>
+                <li>برای سایز داینامیک از <code>ArrayList</code> استفاده کن.</li>
+            </ul>
+
+            <pre><code class="language-java">int[] arr1 = new int[5];          // همه صفر
+int[] arr2 = {1, 2, 3, 4, 5};     // سایز خودکار
+int[][] matrix = {{1,2,3},{4,5,6}};
+System.out.println(matrix[0][1]); // 2</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q"><code>ArrayIndexOutOfBoundsException</code> کِی رخ می‌ده؟</div>
+                <div class="a">وقتی به ایندکس خارج از بازه آرایه دسترسی پیدا کنی. ایندکس‌ها از صفر شروع می‌شوند.
+                    Unchecked Exception است.</div>
+            </div>
+
+            <h2>۱.۵ آرگومان‌های خط فرمان</h2>
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q"><code>String[] args</code> در main چیه؟</div>
+                <div class="a">هر چیزی که موقع اجرا از خط فرمان بعد از اسم برنامه بنویسی، در این آرایه قرار می‌گیرد.
+                </div>
+                <pre><code class="language-bash">java MyProgram arg1 arg2
+# args[0] = "arg1"
+# args[1] = "arg2"</code></pre>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۳: I/O ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۳</span>
+                <span class="sep-title">فاز ۱.۵: ورودی/خروجی</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱.۵</span> ورودی/خروجی (I/O)</h1>
+
+            <h2>دسته‌بندی کلی</h2>
+            <ul>
+                <li><strong>Byte Streams</strong> (<code>InputStream</code>/<code>OutputStream</code>): برای داده‌های
+                    باینری (تصویر، ویدیو).</li>
+                <li><strong>Character Streams</strong> (<code>Reader</code>/<code>Writer</code>): برای داده‌های متنی
+                    (TXT, CSV).</li>
+            </ul>
+
+            <h3>خواندن فایل باینری</h3>
+            <pre><code class="language-java">try (FileInputStream fis = new FileInputStream("image.jpg")) {
+    byte[] buffer = new byte[1024];
+    int bytesRead;
+    while ((bytesRead = fis.read(buffer)) != -1) {
+        // پردازش buffer
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+
+            <h3>خواندن فایل متنی (توصیه شده)</h3>
+            <pre><code class="language-java">try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+
+            <h3>نوشتن فایل متنی</h3>
+            <pre><code class="language-java">try (BufferedWriter bw = new BufferedWriter(new FileWriter("output.txt"))) {
+    bw.write("Hello World!");
+    bw.newLine();
+    bw.write("خط دوم");
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+
+            <h2>Java NIO (مدرن‌تر)</h2>
+            <pre><code class="language-java">// خواندن همه خطوط
+List&lt;String&gt; lines = Files.readAllLines(Paths.get("file.txt"));
+// نوشتن
+Files.write(Paths.get("output.txt"), content);
+// کپی فایل
+Files.copy(Paths.get("src.txt"), Paths.get("dest.txt"));
+// خواندن String (Java 11+)
+String content = Files.readString(Paths.get("file.txt"));</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">فرق <code>InputStream</code> و <code>Reader</code> چیه؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>InputStream:</strong> بایت می‌خواند (0-255). برای داده باینری.</li>
+                        <li><strong>Reader:</strong> کاراکتر می‌خواند (0-65535). پشتیبانی از کدگذاری. برای متن.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Try-with-Resources چه مشکلی را حل می‌کند؟</div>
+                <div class="a">بستن خودکار منابع (AutoCloseable). دیگر نیازی به finally و کد تکراری نیست.</div>
+                <pre><code class="language-java">try (FileInputStream fis = new FileInputStream("file.txt")) {
+    // fis خودکار بسته می‌شود
+} catch (IOException e) { }</code></pre>
+            </div>
+
+            <h3>ورودی از کاربر</h3>
+            <pre><code class="language-java">Scanner scanner = new Scanner(System.in);
+System.out.print("نام: ");
+String name = scanner.nextLine();
+System.out.print("سن: ");
+int age = scanner.nextInt();
+scanner.close();</code></pre>
+        </div>
+
+        <!-- ================= صفحه ۴: OOP ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۴</span>
+                <span class="sep-title">فاز ۲: برنامه‌نویسی شی‌گرا</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۲</span> برنامه‌نویسی شی‌گرا (OOP)</h1>
+
+            <h2>کلاس و شیء</h2>
+            <ul>
+                <li><strong>کلاس:</strong> قالب یا نقشه (حافظه اشغال نمی‌کند).</li>
+                <li><strong>شیء:</strong> نمونه واقعی از کلاس (حافظه اشغال می‌کند).</li>
+            </ul>
+
+            <h2>سازنده (Constructor)</h2>
+            <ul>
+                <li>همنام کلاس، بدون نوع بازگشتی.</li>
+                <li>اگر نسازی، جاوا سازنده پیش‌فرض می‌سازد.</li>
+                <li>به محض ساختن سازنده دلخواه، پیش‌فرض حذف می‌شود.</li>
+            </ul>
+
+            <h2>چهار اصل OOP</h2>
+
+            <h3>۱. کپسوله‌سازی (Encapsulation)</h3>
+            <p>مخفی کردن داده‌ها با <code>private</code> و دسترسی با getter/setter.</p>
+            <pre><code class="language-java">public class Employee {
+    private double salary;
+    public double getSalary() { return salary; }
+    public void setSalary(double s) {
+        if (s > 0) this.salary = s;
+    }
+}</code></pre>
+
+            <h3>۲. وراثت (Inheritance)</h3>
+            <p>رابطه IS-A. با <code>extends</code>.</p>
+            <pre><code class="language-java">class Animal { void sound() { } }
+class Dog extends Animal {
+    @Override void sound() { System.out.println("Woof"); }
+}</code></pre>
+
+            <h3>۳. چندریختی (Polymorphism)</h3>
+            <ul>
+                <li><strong>Compile-Time:</strong> Method Overloading (همنام، پارامتر متفاوت).</li>
+                <li><strong>Runtime:</strong> Method Overriding (بازنویسی در فرزند).</li>
+            </ul>
+            <pre><code class="language-java">Animal myPet = new Dog();
+myPet.sound(); // Woof (Dynamic Dispatch)</code></pre>
+
+            <h3>۴. انتزاع (Abstraction)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>Abstract Class</th>
+                        <th>Interface</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>وراثت</td>
+                        <td>extends (یکی)</td>
+                        <td>implements (چندتا)</td>
+                    </tr>
+                    <tr>
+                        <td>Constructor</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>متد با بدنه</td>
+                        <td>✅</td>
+                        <td>default/static</td>
+                    </tr>
+                    <tr>
+                        <td>فیلد</td>
+                        <td>private/protected</td>
+                        <td>public static final</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">چرا Composition را بر Inheritance ترجیح می‌دهیم؟</div>
+                <div class="a">وراثت جفت‌شدگی شدید (Tight Coupling) ایجاد می‌کند. تغییر در والد فرزند را می‌شکند.
+                    Composition انعطاف‌پذیرتر است (HAS-A).</div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت Composition و Aggregation؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>Composition (قوی):</strong> جزء بدون کل وجود ندارد (خانه و اتاق). داخل ساخته می‌شود.
+                        </li>
+                        <li><strong>Aggregation (ضعیف):</strong> جزء مستقل است (دانشگاه و دانشجو). از بیرون دریافت
+                            می‌شود.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">چرا Multiple Inheritance در جاوا ممنوع است؟</div>
+                <div class="a">به خاطر Diamond Problem. با Interfaceها این مشکل وجود ندارد.</div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۵: Exception, Generics, Collections ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۵</span>
+                <span class="sep-title">فاز ۳: Exception, Generics, Collections</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۳</span> Exception, Generics, Collections</h1>
+
+            <h2>۳.۱ مدیریت استثناها</h2>
+            <ul>
+                <li><strong>Error:</strong> مشکلات جدی (OutOfMemoryError). قابل بازیابی نیست.</li>
+                <li><strong>Exception:</strong> قابل مدیریت.</li>
+                <li><strong>Checked:</strong> کامپایلر مجبورت می‌کند (IOException).</li>
+                <li><strong>Unchecked:</strong> زیرکلاس RuntimeException (NullPointerException).</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q"><code>finally</code> چه زمانی اجرا نمی‌شود؟</div>
+                <div class="a">تنها زمانی که <code>System.exit()</code> صدا زده شود یا نخ اعدام شود. در غیر این صورت
+                    همیشه (حتی با return).</div>
+            </div>
+
+            <h2>۳.۲ جنریک‌ها (Generics)</h2>
+            <p>هدف: Type Safety در زمان کامپایل و حذف Cast.</p>
+            <pre><code class="language-java">// قبل از جنریک
+List list = new ArrayList();
+list.add("Hello");
+String s = (String) list.get(0); // نیاز به Cast
+
+// با جنریک
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("Hello");
+String s = list.get(0); // بدون Cast</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Type Erasure چیه؟</div>
+                <div class="a">اطلاعات نوع جنریک در زمان کامپایل پاک می‌شود. JVM در runtime نمی‌داند
+                    <code>List&lt;String&gt;</code> بوده یا <code>List&lt;Integer&gt;</code>.
+                </div>
+            </div>
+
+            <h2>۳.۳ کالکشن‌ها (Collections)</h2>
+
+            <h3>List</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>ArrayList</th>
+                        <th>LinkedList</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>get(index)</td>
+                        <td>O(1)</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td>add/remove وسط</td>
+                        <td>O(n)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td>حافظه</td>
+                        <td>کمتر</td>
+                        <td>بیشتر</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note"><strong>توصیه:</strong> در ۹۰٪ موارد ArrayList بهتر است.</div>
+
+            <h3>Set</h3>
+            <ul>
+                <li><strong>HashSet:</strong> بدون ترتیب، O(1).</li>
+                <li><strong>LinkedHashSet:</strong> حفظ ترتیب درج.</li>
+                <li><strong>TreeSet:</strong> مرتب، O(log n).</li>
+            </ul>
+
+            <h3>Map</h3>
+            <ul>
+                <li><strong>HashMap:</strong> میانگین O(1). بدون ترتیب.</li>
+                <li><strong>LinkedHashMap:</strong> حفظ ترتیب درج.</li>
+                <li><strong>TreeMap:</strong> مرتب بر اساس کلید، O(log n).</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">HashMap چطور کار می‌کند؟</div>
+                <div class="a">
+                    <ol>
+                        <li>روی کلید <code>hashCode()</code> صدا زده می‌شود.</li>
+                        <li>به ایندکس سطل (Bucket) تبدیل می‌شود.</li>
+                        <li>اگر خالی بود، ذخیره می‌شود. اگر پر بود (Collision)، به لیست اضافه می‌شود.</li>
+                        <li>در Java 8 اگر طول لیست از ۸ بگذرد، به Red-Black Tree تبدیل می‌شود.</li>
+                        <li>در get، با <code>equals()</code> کلید مقایسه می‌شود.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">چرا باید hashCode و equals را همزمان Override کنیم؟</div>
+                <div class="a">قرارداد: اگر equals می‌گوید دو شیء برابرند، hashCode باید یکسان برگرداند. نقض این قرارداد
+                    باعث گم شدن کلید در HashMap می‌شود.</div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۶: Functional & Concurrency ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۶</span>
+                <span class="sep-title">فاز ۴: Functional & Concurrency</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۴</span> Functional & Concurrency</h1>
+
+            <h2>۴.۱ لامبدا (Lambda)</h2>
+            <p>تابع بی‌نام. برای پیاده‌سازی Functional Interface (یک متد انتزاعی).</p>
+            <pre><code class="language-java">// روش قدیمی
+Runnable oldWay = new Runnable() {
+    @Override public void run() { System.out.println("Old"); }
+};
+
+// Lambda
+Runnable newWay = () -> System.out.println("Lambda");</code></pre>
+
+            <h3>Functional Interfaceهای مهم</h3>
+            <ul>
+                <li><code>Predicate&lt;T&gt;</code>: T → boolean (برای filter).</li>
+                <li><code>Function&lt;T,R&gt;</code>: T → R (برای map).</li>
+                <li><code>Consumer&lt;T&gt;</code>: T → void (برای forEach).</li>
+                <li><code>Supplier&lt;T&gt;</code>: () → T.</li>
+            </ul>
+
+            <h2>۴.۲ Stream API</h2>
+            <pre><code class="language-java">List&lt;Integer&gt; numbers = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+
+List&lt;Integer&gt; result = numbers.stream()
+    .filter(n -> n % 2 == 0)
+    .map(n -> n * n)
+    .sorted((a,b) -> b - a)
+    .limit(3)
+    .collect(Collectors.toList()); // [100, 64, 36]</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Stream با Collection چه فرقی داره؟</div>
+                <div class="a">
+                    <ul>
+                        <li>Collection داده را ذخیره می‌کند. Stream ذخیره نمی‌کند، فقط پردازش می‌کند.</li>
+                        <li>Stream عملیات را Lazy ارزیابی می‌کند تا Terminal صدا زده شود.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>۴.۳ Thread و Concurrency</h2>
+            <pre><code class="language-java">class MyTask implements Runnable {
+    @Override public void run() {
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+Thread t1 = new Thread(new MyTask());
+t1.start(); // هرگز run() را مستقیم صدا نزن!</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Race Condition چیه؟</div>
+                <div class="a">وقتی چند Thread به منبع مشترک دسترسی همزمان دارند و حداقل یکی تغییرش می‌دهد. نتیجه
+                    غیرقابل پیش‌بینی می‌شود.</div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q"><code>synchronized</code> چطور مشکل را حل می‌کند؟</div>
+                <div class="a">تضمین می‌کند در هر لحظه فقط یک Thread متد یا بلوک را اجرا کند (با Lock).</div>
+                <pre><code class="language-java">public synchronized void increment() { count++; }</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Deadlock چیه؟</div>
+                <div class="a">دو Thread برای همیشه منتظر هم می‌مانند. A قفل ۱ را دارد و قفل ۲ می‌خواهد، B برعکس.</div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت Runnable و Callable؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>Runnable:</strong> <code>run()</code>، مقدار برنمی‌گرداند، Checked Exception پرتاب
+                            نمی‌کند.</li>
+                        <li><strong>Callable&lt;V&gt;:</strong> <code>call()</code>، مقدار V برمی‌گرداند، Exception
+                            پرتاب می‌کند.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">ExecutorService چیه؟</div>
+                <div class="a">مدیریت Thread Pool. به جای ساختن Thread جدید برای هر کار، از Threadهای آماده استفاده
+                    می‌کند.</div>
+                <pre><code class="language-java">ExecutorService executor = Executors.newFixedThreadPool(5);
+executor.submit(() -> System.out.println("Task"));
+executor.shutdown();</code></pre>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۷: ساختمان داده ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۷</span>
+                <span class="sep-title">فاز ۵: ساختمان داده و الگوریتم</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۵</span> ساختمان داده و الگوریتم</h1>
+
+            <h2>۵.۱ Big O Notation</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>نماد</th>
+                        <th>نام</th>
+                        <th>مثال</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>O(1)</td>
+                        <td>ثابت</td>
+                        <td>دسترسی به آرایه <code>arr[5]</code></td>
+                    </tr>
+                    <tr>
+                        <td>O(log n)</td>
+                        <td>لگاریتمی</td>
+                        <td>جستجوی دودویی، TreeMap</td>
+                    </tr>
+                    <tr>
+                        <td>O(n)</td>
+                        <td>خطی</td>
+                        <td>حلقه for، جستجوی خطی</td>
+                    </tr>
+                    <tr>
+                        <td>O(n log n)</td>
+                        <td>خطی-لگاریتمی</td>
+                        <td>QuickSort، MergeSort</td>
+                    </tr>
+                    <tr>
+                        <td>O(n²)</td>
+                        <td>مربعی</td>
+                        <td>دو حلقه تو در تو، BubbleSort</td>
+                    </tr>
+                    <tr>
+                        <td>O(2^n)</td>
+                        <td>نمایی</td>
+                        <td>فیبوناچی بازگشتی</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۵.۲ ساختمان‌داده‌های اصلی</h2>
+
+            <h3>آرایه (Array)</h3>
+            <ul>
+                <li>دسترسی O(1)</li>
+                <li>درج/حذف O(n)</li>
+                <li>سایز ثابت</li>
+            </ul>
+
+            <h3>لیست پیوندی (Linked List)</h3>
+            <ul>
+                <li>دسترسی O(n)</li>
+                <li>درج/حذف O(1)</li>
+                <li>سایز پویا</li>
+            </ul>
+
+            <h3>Stack (LIFO)</h3>
+            <ul>
+                <li><code>push()</code>، <code>pop()</code>، <code>peek()</code></li>
+                <li>کاربرد: Call Stack، دکمه Back</li>
+            </ul>
+
+            <h3>Queue (FIFO)</h3>
+            <ul>
+                <li><code>offer()</code>، <code>poll()</code></li>
+                <li>کاربرد: صف چاپ، Message Broker</li>
+            </ul>
+
+            <h3>HashMap</h3>
+            <ul>
+                <li>میانگین O(1) برای get/put/delete</li>
+                <li>بدترین حالت O(n) در Collision زیاد</li>
+            </ul>
+
+            <h2>۵.۳ الگوریتم‌های پایه</h2>
+
+            <h3>جستجو</h3>
+            <ul>
+                <li><strong>Linear Search:</strong> O(n). برای داده نامرتب.</li>
+                <li><strong>Binary Search:</strong> O(log n). فقط روی داده مرتب.</li>
+            </ul>
+
+            <h3>مرتب‌سازی</h3>
+            <ul>
+                <li><strong>Bubble Sort:</strong> O(n²). آموزشی.</li>
+                <li><strong>Quick Sort:</strong> متوسط O(n log n). سریع در عمل.</li>
+                <li><strong>Merge Sort:</strong> همیشه O(n log n). پایدار.</li>
+            </ul>
+
+            <h2>۵.۴ رویکردهای طراحی الگوریتم</h2>
+            <ul>
+                <li><strong>Divide and Conquer:</strong> شکستن مسئله به زیرمسئله (Merge Sort).</li>
+                <li><strong>Dynamic Programming:</strong> ذخیره نتایج زیرمسئله‌ها (فیبوناچی).</li>
+                <li><strong>Greedy:</strong> بهترین انتخاب محلی (دایکسترا).</li>
+                <li><strong>Backtracking:</strong> امتحان همه مسیرها (سودوکو).</li>
+            </ul>
+        </div>
+
+        <!-- ================= صفحه ۸: شبکه ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۸</span>
+                <span class="sep-title">فاز ۶: شبکه‌های کامپیوتری</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۶</span> شبکه‌های کامپیوتری</h1>
+
+            <h2>۶.۱ مدل OSI (۷ لایه)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>لایه</th>
+                        <th>وظیفه</th>
+                        <th>مثال</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>۷</td>
+                        <td>Application</td>
+                        <td>رابط کاربر و شبکه</td>
+                        <td>HTTP, DNS, FTP</td>
+                    </tr>
+                    <tr>
+                        <td>۶</td>
+                        <td>Presentation</td>
+                        <td>ترجمه، رمزنگاری</td>
+                        <td>SSL/TLS, JPEG</td>
+                    </tr>
+                    <tr>
+                        <td>۵</td>
+                        <td>Session</td>
+                        <td>مدیریت نشست</td>
+                        <td>RPC</td>
+                    </tr>
+                    <tr>
+                        <td>۴</td>
+                        <td>Transport</td>
+                        <td>انتقال مطمئن (Port)</td>
+                        <td>TCP, UDP</td>
+                    </tr>
+                    <tr>
+                        <td>۳</td>
+                        <td>Network</td>
+                        <td>مسیریابی (IP)</td>
+                        <td>IP, Router</td>
+                    </tr>
+                    <tr>
+                        <td>۲</td>
+                        <td>Data Link</td>
+                        <td>آدرس فیزیکی (MAC)</td>
+                        <td>Ethernet, Switch</td>
+                    </tr>
+                    <tr>
+                        <td>۱</td>
+                        <td>Physical</td>
+                        <td>سیگنال الکتریکی</td>
+                        <td>کابل، Hub</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۶.۲ TCP vs UDP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>TCP</th>
+                        <th>UDP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>اتصال</td>
+                        <td>اتصال‌گرا</td>
+                        <td>غیراتصال‌گرا</td>
+                    </tr>
+                    <tr>
+                        <td>اطمینان</td>
+                        <td>✅ تضمین تحویل</td>
+                        <td>❌ بدون تضمین</td>
+                    </tr>
+                    <tr>
+                        <td>ترتیب</td>
+                        <td>✅ حفظ ترتیب</td>
+                        <td>❌ بدون ترتیب</td>
+                    </tr>
+                    <tr>
+                        <td>سرعت</td>
+                        <td>کندتر</td>
+                        <td>سریع‌تر</td>
+                    </tr>
+                    <tr>
+                        <td>کاربرد</td>
+                        <td>HTTP, FTP, Email</td>
+                        <td>استریم، بازی، DNS</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۶.۳ HTTP</h2>
+
+            <h3>متدهای اصلی</h3>
+            <ul>
+                <li><strong>GET:</strong> خواندن (Safe, Idempotent)</li>
+                <li><strong>POST:</strong> ایجاد (نه Safe، نه Idempotent)</li>
+                <li><strong>PUT:</strong> جایگزینی کامل (Idempotent)</li>
+                <li><strong>PATCH:</strong> به‌روزرسانی بخشی</li>
+                <li><strong>DELETE:</strong> حذف (Idempotent)</li>
+            </ul>
+
+            <h3>Status Codeهای مهم</h3>
+            <ul>
+                <li><strong>200 OK:</strong> موفقیت</li>
+                <li><strong>201 Created:</strong> ایجاد منبع جدید</li>
+                <li><strong>400 Bad Request:</strong> درخواست مشکل‌دار</li>
+                <li><strong>401 Unauthorized:</strong> احراز هویت نشده</li>
+                <li><strong>403 Forbidden:</strong> دسترسی نداره</li>
+                <li><strong>404 Not Found:</strong> پیدا نشد</li>
+                <li><strong>500 Internal Server Error:</strong> خطای سرور</li>
+                <li><strong>503 Service Unavailable:</strong> سرور در دسترس نیست</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال طلایی</div>
+                <div class="q">از Enter تا نمایش صفحه چه اتفاقی می‌افتد؟</div>
+                <div class="a">
+                    <ol>
+                        <li>DNS Lookup (تبدیل دامنه به IP)</li>
+                        <li>TCP Handshake (SYN, SYN-ACK, ACK)</li>
+                        <li>TLS Handshake (برای HTTPS)</li>
+                        <li>ارسال HTTP Request</li>
+                        <li>پاسخ سرور (Response)</li>
+                        <li>رندر صفحه در مرورگر</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2>۶.۴ REST API</h2>
+            <ul>
+                <li><strong>Stateless:</strong> هر درخواست مستقل است.</li>
+                <li><strong>Resource-Based:</strong> منابع با URL مشخص می‌شوند.</li>
+                <li><strong>HTTP Verbs:</strong> GET/POST/PUT/DELETE.</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">CORS چیه؟</div>
+                <div class="a">مکانیزم امنیتی مرورگر (Same-Origin Policy). سرور باید هدر
+                    <code>Access-Control-Allow-Origin</code> را برگرداند.
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۹: سیستم عامل ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۹</span>
+                <span class="sep-title">فاز ۷: سیستم عامل</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۷</span> سیستم عامل</h1>
+
+            <h2>۷.۱ Process vs Thread</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>Process</th>
+                        <th>Thread</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>حافظه</td>
+                        <td>مستقل</td>
+                        <td>مشترک (Heap) + Stack مجزا</td>
+                    </tr>
+                    <tr>
+                        <td>ارتباطات</td>
+                        <td>کند (IPC)</td>
+                        <td>سریع (حافظه مشترک)</td>
+                    </tr>
+                    <tr>
+                        <td>ساخت</td>
+                        <td>پرهزینه</td>
+                        <td>سبک</td>
+                    </tr>
+                    <tr>
+                        <td>ایزوله</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۷.۲ مدیریت حافظه</h2>
+            <ul>
+                <li><strong>Text:</strong> کد برنامه (Read-only).</li>
+                <li><strong>Data:</strong> متغیرهای Global و Static.</li>
+                <li><strong>Stack:</strong> متغیرهای محلی، پارامترها. هر Thread Stack مجزا.</li>
+                <li><strong>Heap:</strong> تخصیص پویا (new). مشترک بین Threadها.</li>
+            </ul>
+
+            <h2>۷.۳ Deadlock - ۴ شرط</h2>
+            <ol>
+                <li><strong>Mutual Exclusion:</strong> منبع انحصاری.</li>
+                <li><strong>Hold and Wait:</strong> نگه‌داشتن و انتظار.</li>
+                <li><strong>No Preemption:</strong> عدم قبضه اجباری.</li>
+                <li><strong>Circular Wait:</strong> انتظار دایره‌ای.</li>
+            </ol>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Context Switch بین Thread و Process چه فرقی داره؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>Process:</strong> پرهزینه (تعویض Page Tables، Flush TLB).</li>
+                        <li><strong>Thread:</strong> سبک‌تر (فقط Stack Pointer و Program Counter).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>۷.۴ مفاهیم تکمیلی</h2>
+            <ul>
+                <li><strong>Virtual Memory:</strong> ترکیب RAM و Disk.</li>
+                <li><strong>Cache:</strong> حافظه سریع نزدیک CPU.</li>
+                <li><strong>Lock:</strong> انحصاری (ReentrantLock).</li>
+                <li><strong>Semaphore:</strong> شمارنده دسترسی همزمان.</li>
+            </ul>
+        </div>
+
+        <!-- ================= صفحه ۱۰: پایگاه داده ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۰</span>
+                <span class="sep-title">فاز ۸: پایگاه داده</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۸</span> پایگاه داده</h1>
+
+            <h2>۸.۱ طراحی پایگاه داده</h2>
+
+            <h3>کلیدها</h3>
+            <ul>
+                <li><strong>Primary Key (PK):</strong> یکتا، نمی‌تواند null باشد.</li>
+                <li><strong>Foreign Key (FK):</strong> اشاره به PK جدول دیگر. حفظ یکپارچگی ارجاعی.</li>
+            </ul>
+
+            <h3>روابط</h3>
+            <ul>
+                <li><strong>1:1:</strong> یک User یک Profile.</li>
+                <li><strong>1:N:</strong> یک Customer چند Order. (پرکاربردترین)</li>
+                <li><strong>M:N:</strong> Student و Course. نیاز به جدول واسط.</li>
+            </ul>
+
+            <h2>۸.۲ نرمال‌سازی (Normalization)</h2>
+            <ul>
+                <li><strong>1NF:</strong> هر خانه تک‌مقداری (Atomic).</li>
+                <li><strong>2NF:</strong> هیچ صفت غیرکلیدی به بخشی از کلید ترکیبی وابسته نباشد.</li>
+                <li><strong>3NF:</strong> هیچ صفت غیرکلیدی به صفت غیرکلیدی دیگر وابسته نباشد (رفع Transitive
+                    Dependency).</li>
+            </ul>
+
+            <h2>۸.۳ ایندکس (Index)</h2>
+            <ul>
+                <li>ساختمان داده (B-Tree) برای افزایش سرعت SELECT.</li>
+                <li><strong>مزیت:</strong> خواندن سریع‌تر.</li>
+                <li><strong>عیب:</strong> نوشتن کندتر، فضای اضافی.</li>
+                <li>روی ستون‌های WHERE، JOIN، ORDER BY بساز.</li>
+            </ul>
+
+            <h2>۸.۴ SQL - JOINها</h2>
+            <pre><code class="language-sql">-- INNER JOIN: فقط تطابق‌ها
+SELECT * FROM Customers
+INNER JOIN Orders ON Customers.CustID = Orders.CustID;
+
+-- LEFT JOIN: همه چپ + تطابق راست
+SELECT * FROM Customers
+LEFT JOIN Orders ON Customers.CustID = Orders.CustID;</code></pre>
+
+            <h2>۸.۵ GROUP BY و HAVING</h2>
+            <pre><code class="language-sql">SELECT CustomerID, COUNT(*) AS OrderCount
+FROM Orders
+GROUP BY CustomerID
+HAVING COUNT(*) > 2;</code></pre>
+
+            <ul>
+                <li><strong>WHERE:</strong> فیلتر قبل از گروه‌بندی.</li>
+                <li><strong>HAVING:</strong> فیلتر بعد از گروه‌بندی (روی توابع تجمعی).</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت SQL و NoSQL؟</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ویژگی</th>
+                            <th>SQL</th>
+                            <th>NoSQL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ساختار</td>
+                            <td>جدولی</td>
+                            <td>Document/Key-Value</td>
+                        </tr>
+                        <tr>
+                            <td>تراکنش</td>
+                            <td>ACID</td>
+                            <td>BASE</td>
+                        </tr>
+                        <tr>
+                            <td>مقیاس</td>
+                            <td>عمودی</td>
+                            <td>افقی</td>
+                        </tr>
+                        <tr>
+                            <td>مثال</td>
+                            <td>MySQL, PostgreSQL</td>
+                            <td>MongoDB, Redis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">Redis چیه؟</div>
+                <div class="a">دیتابیس In-Memory از نوع Key-Value. برای Cache، Session، Rate Limiting. فوق‌العاده سریع.
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۱۱: امنیت ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۱</span>
+                <span class="sep-title">فاز ۹: امنیت</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۹</span> امنیت</h1>
+
+            <h2>۹.۱ Authentication vs Authorization</h2>
+            <ul>
+                <li><strong>Authentication:</strong> "تو کی هستی؟" (401 اگر ناموفق).</li>
+                <li><strong>Authorization:</strong> "تو چه کاری می‌تونی انجام بدی؟" (403 اگر ناموفق).</li>
+            </ul>
+
+            <h2>۹.۲ ذخیره پسورد</h2>
+            <ul>
+                <li>هرگز Plain Text ذخیره نکن.</li>
+                <li>از <strong>Hashing</strong> یک‌طرفه استفاده کن: BCrypt, SCrypt, Argon2.</li>
+                <li><strong>Salt:</strong> رشته تصادفی یکتا برای هر پسورد.</li>
+            </ul>
+            <pre><code class="language-java">@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}</code></pre>
+
+            <h2>۹.۳ JWT (JSON Web Token)</h2>
+            <p>ساختار: <code>HEADER.PAYLOAD.SIGNATURE</code></p>
+            <ul>
+                <li><strong>Header:</strong> الگوریتم (HS256).</li>
+                <li><strong>Payload:</strong> Claims (sub, name, role, exp).</li>
+                <li><strong>Signature:</strong> امضا با SECRET_KEY.</li>
+            </ul>
+            <div class="note"><strong>هشدار:</strong> Payload فقط Base64 Encode شده، نه Encrypt! اطلاعات حساس نگذار.
+            </div>
+
+            <h3>فرآیند</h3>
+            <ol>
+                <li>کاربر لاگین می‌کند.</li>
+                <li>سرور JWT امضاشده برمی‌گرداند.</li>
+                <li>کلاینت در هدر <code>Authorization: Bearer &lt;token&gt;</code> می‌فرستد.</li>
+                <li>سرور امضا را چک می‌کند (بدون دیتابیس).</li>
+            </ol>
+
+            <h2>۹.۴ آسیب‌پذیری‌های OWASP</h2>
+
+            <h3>SQL Injection</h3>
+            <ul>
+                <li>ورودی کاربر مستقیماً به کوئری اضافه می‌شود.</li>
+                <li><strong>راه حل:</strong> PreparedStatement.</li>
+            </ul>
+            <pre><code class="language-java">String query = "SELECT * FROM users WHERE username = ?";
+PreparedStatement ps = connection.prepareStatement(query);
+ps.setString(1, userInput); // امن</code></pre>
+
+            <h3>XSS</h3>
+            <ul>
+                <li>اسکریپت مخرب در صفحه اجرا می‌شود.</li>
+                <li><strong>راه حل:</strong> Escape/Encode خروجی‌ها.</li>
+            </ul>
+
+            <h3>CSRF</h3>
+            <ul>
+                <li>قربانی فریب می‌خورد درخواست مخرب بفرستد.</li>
+                <li><strong>راه حل:</strong> CSRF Token. (با JWT در هدر، معمولاً ایمن هستی).</li>
+            </ul>
+
+            <h2>۹.۵ بهترین روش‌ها</h2>
+            <ul>
+                <li>Principle of Least Privilege.</li>
+                <li>لاگ‌گیری و مانیتورینگ.</li>
+                <li>به‌روزرسانی وابستگی‌ها.</li>
+                <li>HTTPS همه جا.</li>
+            </ul>
+        </div>
+
+        <!-- ================= صفحه ۱۲: دیزاین پترن ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۲</span>
+                <span class="sep-title">دیزاین پترن‌ها</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۰</span> دیزاین پترن‌های پرکاربرد</h1>
+
+            <h2>سه دسته اصلی</h2>
+            <ul>
+                <li><strong>Creational:</strong> نحوه ساخت اشیاء (Singleton, Factory, Builder).</li>
+                <li><strong>Structural:</strong> نحوه ترکیب (Adapter, Decorator, Facade).</li>
+                <li><strong>Behavioral:</strong> نحوه تعامل (Strategy, Observer, Command).</li>
+            </ul>
+
+            <h2>Singleton</h2>
+            <p>فقط یک نمونه از کلاس در کل برنامه.</p>
+            <pre><code class="language-java">public class GameConfig {
+    private static GameConfig instance;
+    private GameConfig() { }
+    public static synchronized GameConfig getInstance() {
+        if (instance == null) instance = new GameConfig();
+        return instance;
+    }
+}</code></pre>
+
+            <h2>Factory Method</h2>
+            <p>ساخت شیء را به زیرکلاس واگذار کن.</p>
+            <pre><code class="language-java">abstract class Enemy { abstract void attack(); }
+class Orc extends Enemy { void attack() { } }
+
+class EnemyFactory {
+    public static Enemy create(String type) {
+        return switch (type) {
+            case "orc" -> new Orc();
+            default -> throw new IllegalArgumentException();
+        };
+    }
+}</code></pre>
+
+            <h2>Builder</h2>
+            <p>ساخت اشیاء پیچیده با پارامترهای زیاد.</p>
+            <pre><code class="language-java">Character hero = new Character.Builder()
+    .name("Hero").hp(100).damage(20).build();</code></pre>
+
+            <h2>Strategy</h2>
+            <p>جایگزین if-elseهای طولانی. الگوریتم قابل تعویض در runtime.</p>
+            <pre><code class="language-java">interface PaymentStrategy { void pay(double amount); }
+class CreditCardPayment implements PaymentStrategy { }
+
+class PaymentProcessor {
+    private PaymentStrategy strategy;
+    public PaymentProcessor(PaymentStrategy s) { this.strategy = s; }
+    public void process(double amount) { strategy.pay(amount); }
+}</code></pre>
+
+            <h2>Observer</h2>
+            <p>اطلاع‌رسانی تغییرات به اشیاء وابسته.</p>
+            <pre><code class="language-java">interface Observer { void update(int hp); }
+
+class Player {
+    private List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();
+    public void addObserver(Observer o) { observers.add(o); }
+    public void setHp(int hp) {
+        this.hp = hp;
+        observers.forEach(o -> o.update(hp));
+    }
+}</code></pre>
+
+            <div class="note">
+                <strong>نکته طلایی:</strong> همیشه به جای Inheritance (IS-A) از Composition (HAS-A) استفاده کن.
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۱۳: سوالات HR ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۳</span>
+                <span class="sep-title">فاز ۱۰: سوالات غیرفنی</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۰</span> سوالات غیرفنی (HR)</h1>
+
+            <h2>سوال ۱: "از خودت بگو"</h2>
+            <p>فرمول <strong>گذشته - حال - آینده</strong>:</p>
+            <ul>
+                <li><strong>گذشته:</strong> تحصیلات و تجربه مختصر.</li>
+                <li><strong>حال:</strong> چرا برنامه‌نویسی و مهارت‌های فعلی.</li>
+                <li><strong>آینده:</strong> چرا این شرکت و این موقعیت.</li>
+            </ul>
+
+            <h2>سوال ۲: "چرا تغییر مسیر دادی؟"</h2>
+            <p>نقطه ضعف را به نقطه قوت تبدیل کن. مثلاً: "معماری به من یاد داد ساختارمند فکر کنم. در برنامه‌نویسی هم همین
+                نیاز است."</p>
+
+            <h2>سوال ۳: "نقطه ضعف و قوتت؟"</h2>
+            <ul>
+                <li><strong>قوت:</strong> پشتکار در حل مسائل.</li>
+                <li><strong>ضعف:</strong> گاهی درگیر جزئیات می‌شوم. راه حل: هر چند وقت یک بار به عقب برمی‌گردم و تصویر
+                    بزرگ را چک می‌کنم.</li>
+            </ul>
+
+            <h2>روش STAR برای سوالات رفتاری</h2>
+            <ul>
+                <li><strong>S</strong>ituation (موقعیت)</li>
+                <li><strong>T</strong>ask (وظیفه)</li>
+                <li><strong>A</strong>ction (اقدام)</li>
+                <li><strong>R</strong>esult (نتیجه)</li>
+            </ul>
+
+            <h2>سوالاتی که تو باید بپرسی</h2>
+            <ul>
+                <li>تیم از چه متدولوژی استفاده می‌کند؟ (Agile/Scrum)</li>
+                <li>بزرگترین چالش فنی تیم چیست؟</li>
+                <li>فرآیند Code Review چطور است؟</li>
+                <li>مسیر پیشرفت فنی چطور تعریف شده؟</li>
+            </ul>
+
+            <h2>تاکتیک‌های روز مصاحبه</h2>
+            <ul>
+                <li>پروژه‌ها آماده و قابل اجرا.</li>
+                <li>تحقیق در مورد شرکت.</li>
+                <li>اگر متوجه نشدی، بپرس.</li>
+                <li>اگر بلد نیستی، اعتراف کن و مسیر فکرت را نشان بده.</li>
+                <li>جمع‌بندی نهایی و تشکر.</li>
+            </ul>
+        </div>
+
+        <!-- ================= صفحه ۱۴: System Design ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۴</span>
+                <span class="sep-title">System Design (سطح جونیور)</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۱</span> System Design (سطح جونیور)</h1>
+
+            <h2>الگوی پاسخ به سوال System Design</h2>
+            <ol>
+                <li><strong>درک نیازمندی‌ها:</strong> Functional و Non-Functional.</li>
+                <li><strong>طراحی سطح بالا:</strong> رسم نمودار و توضیح کامپوننت‌ها.</li>
+                <li><strong>جزئیات:</strong> دیتابیس، کش، Message Queue.</li>
+                <li><strong>مقیاس‌پذیری:</strong> چطور با افزایش کاربران کار می‌کند؟</li>
+                <li><strong>تخمین اعداد:</strong> تعداد کاربران، فضای ذخیره‌سازی.</li>
+            </ol>
+
+            <h2>مثال: URL Shortener</h2>
+            <ul>
+                <li><strong>Load Balancer:</strong> توزیع ترافیک.</li>
+                <li><strong>Application Server:</strong> پردازش منطق.</li>
+                <li><strong>Database:</strong> ذخیره (short_code ← original_url).</li>
+                <li><strong>ID Generator:</strong> Base62 Encoding.</li>
+                <li><strong>Cache:</strong> Redis برای لینک‌های پرطرفدار.</li>
+            </ul>
+
+            <h2>مثال: سیستم پیام‌رسان</h2>
+            <ul>
+                <li><strong>Gateway:</strong> ورودی و احراز هویت.</li>
+                <li><strong>Message Queue:</strong> مدیریت بار.</li>
+                <li><strong>WebSocket Server:</strong> ارتباط لحظه‌ای.</li>
+                <li><strong>Message Processor:</strong> ذخیره‌سازی.</li>
+                <li><strong>Database:</strong> با Sharding بر اساس User ID.</li>
+            </ul>
+
+            <h2>مفاهیم کلیدی</h2>
+            <ul>
+                <li><strong>Load Balancer:</strong> Round Robin, Least Connections.</li>
+                <li><strong>Cache:</strong> Redis, Memcached. استراتژی Cache-Aside.</li>
+                <li><strong>Sharding:</strong> تقسیم دیتابیس.</li>
+                <li><strong>Message Queue:</strong> Kafka, RabbitMQ.</li>
+                <li><strong>CDN:</strong> پخش سریع محتوا.</li>
+            </ul>
+
+            <h2>مثال: سیستم بانکی (ACID)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Atomicity</td>
+                        <td>یا همه یا هیچکدام</td>
+                    </tr>
+                    <tr>
+                        <td>Consistency</td>
+                        <td>داده معتبر می‌ماند</td>
+                    </tr>
+                    <tr>
+                        <td>Isolation</td>
+                        <td>تراکنش‌ها جدا</td>
+                    </tr>
+                    <tr>
+                        <td>Durability</td>
+                        <td>بعد از ثبت از بین نمی‌رود</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ================= صفحه ۱۵: Spring Boot ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۵</span>
+                <span class="sep-title">Spring Boot</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۳</span> Spring Boot</h1>
+
+            <h2>۱۳.۱ چرخه حیات Bean</h2>
+            <ol>
+                <li><strong>Instantiation:</strong> سازنده صدا زده می‌شود.</li>
+                <li><strong>Dependency Injection:</strong> وابستگی‌ها تزریق می‌شوند.</li>
+                <li><strong>Initialization:</strong> <code>@PostConstruct</code> و <code>afterPropertiesSet</code>.</li>
+                <li><strong>Ready for Use:</strong> آماده استفاده.</li>
+                <li><strong>Destruction:</strong> <code>@PreDestroy</code>.</li>
+            </ol>
+
+            <h2>۱۳.۲ انواع تزریق وابستگی</h2>
+            <pre><code class="language-java">// ۱. Constructor Injection (توصیه شده)
+@Service
+class UserService {
+    private final UserRepository repository;
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+}
+
+// ۲. Setter Injection
+@Autowired
+public void setRepository(UserRepository repository) { }
+
+// ۳. Field Injection (کمتر توصیه می‌شود)
+@Autowired
+private UserRepository repository;</code></pre>
+
+            <h2>۱۳.۳ @Transactional</h2>
+            <ul>
+                <li>Spring با Proxy دور کلاس می‌پیچد.</li>
+                <li>روی متدهای <code>public</code> کار می‌کند.</li>
+                <li>RuntimeException باعث Rollback می‌شود.</li>
+                <li>Checked Exception نه (مگر با <code>rollbackFor</code>).</li>
+            </ul>
+
+            <h2>۱۳.۴ Annotationهای اصلی</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Annotation</th>
+                        <th>کاربرد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>@RestController</code></td>
+                        <td>کنترلر REST API</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Service</code></td>
+                        <td>لایه Business Logic</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Repository</code></td>
+                        <td>لایه دسترسی به دیتابیس</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Component</code></td>
+                        <td>عمومی</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۱۳.۵ Scopeهای Bean</h2>
+            <ul>
+                <li><strong>singleton (پیش‌فرض):</strong> یک نمونه در کل برنامه.</li>
+                <li><strong>prototype:</strong> هر بار نمونه جدید.</li>
+                <li><strong>request:</strong> هر درخواست HTTP.</li>
+                <li><strong>session:</strong> هر نشست کاربر.</li>
+            </ul>
+
+            <h2>۱۳.۶ تنظیمات application.properties</h2>
+            <pre><code class="language-properties">server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=1234
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت @Component، @Service، @Repository؟</div>
+                <div class="a">همه Bean می‌سازند. @Service برای Business Logic، @Repository برای دیتابیس (با ترجمه
+                    Exception)، @Component عمومی.</div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۱۶: JDBC, JPA, Hibernate ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۶</span>
+                <span class="sep-title">JDBC, JPA, Hibernate</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۴</span> JDBC, JPA, Hibernate</h1>
+
+            <h2>۱۴.۱ JDBC</h2>
+            <p>پایه‌ای‌ترین راه ارتباط با دیتابیس.</p>
+            <pre><code class="language-java">Connection conn = DriverManager.getConnection(url, user, pass);
+PreparedStatement ps = conn.prepareStatement(
+    "SELECT * FROM users WHERE username = ?");
+ps.setString(1, username);
+ResultSet rs = ps.executeQuery();
+while (rs.next()) {
+    String name = rs.getString("name");
+}</code></pre>
+
+            <div class="note">
+                <strong>مهم:</strong> همیشه از PreparedStatement استفاده کن (جلوگیری از SQL Injection).
+            </div>
+
+            <h2>۱۴.۲ JPA</h2>
+            <p>استاندارد Mapping اشیاء جاوا به جداول دیتابیس.</p>
+            <pre><code class="language-java">@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List&lt;Order&gt; orders;
+}</code></pre>
+
+            <h2>۱۴.۳ Hibernate</h2>
+            <p>محبوب‌ترین پیاده‌سازی JPA.</p>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">N+1 Query Problem چیه؟</div>
+                <div class="a">وقتی Entity را می‌خوانی و بعد به Property Lazy دسترسی پیدا می‌کنی، Hibernate برای هرکدام
+                    یک Query جداگانه می‌زند.</div>
+                <pre><code class="language-java">// راه حل ۱: JOIN FETCH
+@Query("SELECT u FROM User u JOIN FETCH u.orders")
+List&lt;User&gt; findAllWithOrders();
+
+// راه حل ۲: EntityGraph
+@EntityGraph(attributePaths = {"orders"})
+List&lt;User&gt; findAll();</code></pre>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت FetchType.EAGER و LAZY؟</div>
+                <div class="a">
+                    <ul>
+                        <li><strong>EAGER:</strong> همین الان بارگذاری کن (ساده‌تر، کندتر).</li>
+                        <li><strong>LAZY (پیش‌فرض):</strong> فقط وقتی نیاز شد (سریع‌تر، ممکن است N+1).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>۱۴.۴ Spring Data JPA</h2>
+            <pre><code class="language-java">public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+    User findByUsername(String username);
+    List&lt;User&gt; findByAgeGreaterThan(int age);
+    boolean existsByUsername(String username);
+
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    User findUserByUsername(@Param("username") String username);
+}</code></pre>
+
+            <h2>۱۴.۵ مقایسه</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>JDBC</th>
+                        <th>JPA</th>
+                        <th>Hibernate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>سطح</td>
+                        <td>پایین</td>
+                        <td>متوسط</td>
+                        <td>بالا</td>
+                    </tr>
+                    <tr>
+                        <td>کنترل</td>
+                        <td>کامل</td>
+                        <td>کمتر</td>
+                        <td>کمترین</td>
+                    </tr>
+                    <tr>
+                        <td>راحتی</td>
+                        <td>سخت</td>
+                        <td>راحت</td>
+                        <td>بسیار راحت</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ================= صفحه ۱۷: DevOps ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۷</span>
+                <span class="sep-title">DevOps, Docker, Linux</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۵</span> DevOps, Docker, Linux</h1>
+
+            <h2>۱۵.۱ Docker</h2>
+            <p>بسته‌بندی برنامه و وابستگی‌ها در Container.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>Docker</th>
+                        <th>VM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>سیستم‌عامل</td>
+                        <td>مشترک با Host</td>
+                        <td>مجزا</td>
+                    </tr>
+                    <tr>
+                        <td>اندازه</td>
+                        <td>سبک (MB)</td>
+                        <td>سنگین (GB)</td>
+                    </tr>
+                    <tr>
+                        <td>سرعت</td>
+                        <td>سریع</td>
+                        <td>کند</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pre><code class="language-dockerfile">FROM openjdk:17-jdk-alpine
+WORKDIR /app
+COPY target/myapp.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+
+            <h3>دستورات مهم</h3>
+            <pre><code class="language-bash">docker build -t myapp .
+docker run -p 8080:8080 myapp
+docker ps
+docker stop container_id
+docker logs container_id</code></pre>
+
+            <h2>۱۵.۲ Linux - دستورات ضروری</h2>
+            <pre><code class="language-bash">ls -la          # لیست فایل‌ها
+cd /path        # تغییر دایرکتوری
+mkdir newdir    # ساخت دایرکتوری
+rm -rf dir      # حذف (با احتیاط!)
+cp file1 file2  # کپی
+mv file1 file2  # جابجایی
+
+cat file.txt    # نمایش فایل
+tail -f log.txt # دنبال کردن لاگ
+grep "error" log.txt # جستجو
+
+ps aux          # فرآیندها
+top             # مصرف منابع
+kill -9 PID     # کشتن فرآیند
+df -h           # فضای دیسک
+free -h         # حافظه RAM</code></pre>
+
+            <h2>۱۵.۳ CI/CD</h2>
+            <p>خودکارسازی Build، Test و Deploy.</p>
+            <ul>
+                <li><strong>Jenkins:</strong> محبوب‌ترین.</li>
+                <li><strong>GitHub Actions:</strong> یکپارچه با GitHub.</li>
+                <li><strong>GitLab CI:</strong> یکپارچه با GitLab.</li>
+            </ul>
+
+            <h2>۱۵.۴ Kafka</h2>
+            <p>سیستم پیام‌رسانی توزیع‌شده.</p>
+            <ul>
+                <li><strong>Producer:</strong> فرستنده.</li>
+                <li><strong>Consumer:</strong> گیرنده.</li>
+                <li><strong>Topic:</strong> دسته‌بندی پیام‌ها.</li>
+                <li><strong>Partition:</strong> تقسیم Topic.</li>
+            </ul>
+        </div>
+
+        <!-- ================= صفحه ۱۸: تست‌نویسی ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۸</span>
+                <span class="sep-title">تست‌نویسی</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۶</span> تست‌نویسی</h1>
+
+            <h2>۱۶.۱ چرا تست بنویسیم؟</h2>
+            <ul>
+                <li>اطمینان از صحت کد.</li>
+                <li>جلوگیری از Regression Bug.</li>
+                <li>مستندسازی زنده.</li>
+                <li>طراحی بهتر.</li>
+            </ul>
+
+            <h2>۱۶.۲ هرم تست</h2>
+            <ul>
+                <li><strong>Unit Test:</strong> بیشترین تعداد. یک واحد کوچک.</li>
+                <li><strong>Integration Test:</strong> تعداد متوسط. ارتباط چند جزء.</li>
+                <li><strong>E2E Test:</strong> کمترین. کل سیستم.</li>
+            </ul>
+
+            <h2>۱۶.۳ اصول FIRST</h2>
+            <ul>
+                <li><strong>Fast:</strong> سریع.</li>
+                <li><strong>Independent:</strong> مستقل.</li>
+                <li><strong>Repeatable:</strong> تکرارپذیر.</li>
+                <li><strong>Self-Validating:</strong> خودتأییدگر.</li>
+                <li><strong>Timely:</strong> به‌موقع.</li>
+            </ul>
+
+            <h2>۱۶.۴ ساختار Given-When-Then</h2>
+            <pre><code class="language-java">@Test
+void shouldReturnUserWhenValidUsername() {
+    // GIVEN
+    String username = "ali";
+
+    // WHEN
+    User result = service.findUser(username);
+
+    // THEN
+    assertNotNull(result);
+    assertEquals("ali", result.getUsername());
+}</code></pre>
+
+            <h2>۱۶.۵ JUnit 5</h2>
+            <pre><code class="language-java">@BeforeEach void setUp() { calculator = new Calculator(); }
+@AfterEach void tearDown() { }
+
+@Test
+void shouldAddCorrectly() {
+    assertEquals(8, calculator.add(5, 3));
+}
+
+@Test
+void shouldThrowException() {
+    assertThrows(ArithmeticException.class,
+        () -> calculator.divide(10, 0));
+}</code></pre>
+
+            <h2>۱۶.۶ Mockito</h2>
+            <pre><code class="language-java">@Mock private UserRepository repository;
+@InjectMocks private UserService service;
+
+@Test
+void shouldReturnUser() {
+    when(repository.findByUsername("ali"))
+        .thenReturn(Optional.of(new User("ali")));
+
+    User result = service.findUser("ali");
+
+    verify(repository).findByUsername("ali");
+}</code></pre>
+
+            <h2>۱۶.۷ تست در Spring Boot</h2>
+            <ul>
+                <li><code>@WebMvcTest</code>: تست لایه Controller.</li>
+                <li><code>@DataJpaTest</code>: تست لایه دیتابیس.</li>
+                <li><code>@SpringBootTest</code>: تست کامل Context.</li>
+            </ul>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت @Mock و @MockBean؟</div>
+                <div class="a">
+                    <ul>
+                        <li><code>@Mock</code>: از Mockito. Mock ساده.</li>
+                        <li><code>@MockBean</code>: از Spring Boot. Mock را در Context قرار می‌دهد.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۱۹: Thymeleaf, Maven, Logging ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۱۹</span>
+                <span class="sep-title">Thymeleaf, Maven, Logging</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۱۷-۱۹</span> Thymeleaf, Maven, Logging</h1>
+
+            <h2>۱۷. Thymeleaf</h2>
+            <p>موتور قالب‌سازی مدرن برای Spring Boot.</p>
+            <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;body&gt;
+    &lt;h1 th:text="${pageTitle}"&gt;عنوان&lt;/h1&gt;
+    &lt;div th:if="${user != null}"&gt;
+        &lt;p th:text="${user.username}"&gt;کاربر&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;tr th:each="user : ${users}"&gt;
+        &lt;td th:text="${user.id}"&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h3>مقایسه با JSP</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>Thymeleaf</th>
+                        <th>JSP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>مدرن</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Natural Templating</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>XSS Protection</td>
+                        <td>خودکار</td>
+                        <td>دستی</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>۱۸. Maven</h2>
+            <p>ابزار مدیریت وابستگی و Build.</p>
+            <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+            <h3>Scopeها</h3>
+            <ul>
+                <li><strong>compile:</strong> پیش‌فرض، همه جا.</li>
+                <li><strong>provided:</strong> در JAR نمی‌آید.</li>
+                <li><strong>runtime:</strong> فقط در runtime.</li>
+                <li><strong>test:</strong> فقط برای تست.</li>
+            </ul>
+
+            <h3>دستورات مهم</h3>
+            <pre><code class="language-bash">mvn clean install
+mvn test
+mvn spring-boot:run
+mvn dependency:tree</code></pre>
+
+            <h2>۱۹. لاگ‌گیری (Logging)</h2>
+            <p>SLF4J به عنوان Facade، Logback به عنوان پیاده‌سازی پیش‌فرض.</p>
+
+            <h3>سطوح لاگ</h3>
+            <pre><code>TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR</code></pre>
+
+            <h3>استفاده با Lombok</h3>
+            <pre><code class="language-java">@Slf4j
+@Service
+public class UserService {
+    public void process(Long id) {
+        log.info("Processing user: {}", id);
+        log.error("Error occurred", e);
+    }
+}</code></pre>
+
+            <h3>تنظیمات application.properties</h3>
+            <pre><code class="language-properties">logging.level.root=INFO
+logging.level.com.example=DEBUG
+logging.file.name=logs/myapp.log</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">چرا از SLF4J استفاده می‌کنیم؟</div>
+                <div class="a">Facade است. می‌توانیم کتابخانه لاگ را عوض کنیم بدون تغییر کد. API یکسان و پشتیبانی از
+                    پارامتریشدن.</div>
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۲۰: Spring Advanced ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۰</span>
+                <span class="sep-title">Spring Advanced</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">۲۰</span> Spring Advanced (Caching, Async, Validation)</h1>
+
+            <h2>۲۰.۱ Caching</h2>
+            <pre><code class="language-java">@Configuration
+@EnableCaching
+public class CacheConfig {
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("users");
+    }
+}
+
+@Service
+public class UserService {
+    @Cacheable("users")
+    public User findUser(Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+    @CacheEvict(value = "users", key = "#id")
+    public void deleteUser(Long id) { }
+}</code></pre>
+
+            <h2>۲۰.۲ Async</h2>
+            <pre><code class="language-java">@Configuration
+@EnableAsync
+public class AsyncConfig { }
+
+@Service
+public class EmailService {
+    @Async
+    public void sendEmail(String to, String body) {
+        // در Thread جداگانه اجرا می‌شود
+    }
+}</code></pre>
+
+            <h2>۲۰.۳ Scheduling</h2>
+            <pre><code class="language-java">@Component
+public class ScheduledTasks {
+    @Scheduled(fixedRate = 5000)
+    public void runEvery5Seconds() { }
+
+    @Scheduled(cron = "0 0 2 * * *") // هر روز ۲ بامداد
+    public void dailyBackup() { }
+}</code></pre>
+
+            <h2>۲۰.۴ Validation</h2>
+            <pre><code class="language-java">@Data
+public class UserRequest {
+    @NotBlank(message = "نام کاربری اجباری است")
+    @Size(min = 3, max = 20)
+    private String username;
+
+    @Email(message = "ایمیل نامعتبر است")
+    private String email;
+
+    @Min(18) @Max(100)
+    private Integer age;
+}</code></pre>
+
+            <pre><code class="language-java">@RestController
+public class UserController {
+    @PostMapping
+    public ResponseEntity&lt;User&gt; create(@Valid @RequestBody UserRequest request) {
+        return ResponseEntity.ok(service.save(request));
+    }
+}</code></pre>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه</div>
+                <div class="q">تفاوت @Valid و @Validated؟</div>
+                <div class="a">
+                    <ul>
+                        <li><code>@Valid</code>: از JPA. اعتبارسنجی استاندارد.</li>
+                        <li><code>@Validated</code>: از Spring. پشتیبانی از Group Validation.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>نکته طلایی:</strong> برای فعال‌سازی Caching، Async و Scheduling حتماً از
+                <code>@EnableCaching</code>، <code>@EnableAsync</code> و <code>@EnableScheduling</code> استفاده کن.
+            </div>
+        </div>
+
+        <!-- ================= صفحه ۲۱: اصطلاحات پایه جاوا ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۱</span>
+                <span class="sep-title">اصطلاحات پایه جاوا</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۱</span> اصطلاحات پایه جاوا</h1>
+        
+            <h2>محیط اجرا و ابزارها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>JDK</strong></td>
+                        <td>Java Development Kit – کیت کامل توسعه جاوا (JRE + کامپایلر javac + ابزارها)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JRE</strong></td>
+                        <td>Java Runtime Environment – محیط اجرای برنامه‌های جاوا (JVM + کتابخانه‌ها)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JVM</strong></td>
+                        <td>Java Virtual Machine – ماشین مجازی که بایت‌کد را اجرا می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bytecode</strong></td>
+                        <td>کد میانی تولیدشده توسط javac که JVM آن را اجرا می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JIT</strong></td>
+                        <td>Just-In-Time Compiler – کامپایل بایت‌کد به کد ماشین در زمان اجرا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JAR</strong></td>
+                        <td>Java Archive – آرشیو فشرده شامل کلاس‌ها و منابع</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WAR</strong></td>
+                        <td>Web Archive – آرشیو وب اپلیکیشن جاوا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Classpath</strong></td>
+                        <td>مسیری که JVM برای پیدا کردن کلاس‌ها جستجو می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ClassLoader</strong></td>
+                        <td>مسئول بارگذاری کلاس‌ها در حافظه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Garbage Collector</strong></td>
+                        <td>جمع‌آور خودکار اشیاء بی‌استفاده از Heap</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>مفاهیم حافظه و اجرا</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Stack</strong></td>
+                        <td>ناحیه حافظه برای متغیرهای محلی، پارامترها و فراخوانی متدها (هر Thread مجزا)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heap</strong></td>
+                        <td>ناحیه حافظه برای اشیاء ساخته‌شده با <code>new</code> (مشترک بین Threadها)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reference</strong></td>
+                        <td>اشاره‌گر به شیء در Heap که در Stack ذخیره می‌شود</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primitive</strong></td>
+                        <td>انواع اولیه (int, boolean, ...) که مستقیماً در Stack ذخیره می‌شوند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wrapper Class</strong></td>
+                        <td>کلاس پوششی مثل <code>Integer</code> برای هر Primitive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autoboxing</strong></td>
+                        <td>تبدیل خودکار Primitive به Wrapper</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unboxing</strong></td>
+                        <td>تبدیل خودکار Wrapper به Primitive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Immutable</strong></td>
+                        <td>غیرقابل تغییر؛ مثل <code>String</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mutable</strong></td>
+                        <td>قابل تغییر پس از ساخت؛ مثل <code>StringBuilder</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>String Pool</strong></td>
+                        <td>ناحیه‌ای در Heap برای ذخیره و بازاستفاده از Stringهای Literal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۲: اصطلاحات OOP ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۲</span>
+                <span class="sep-title">اصطلاحات OOP</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۲</span> اصطلاحات برنامه‌نویسی شی‌گرا</h1>
+        
+            <h2>مفاهیم اصلی OOP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Class</strong></td>
+                        <td>قالب یا نقشه برای ساخت اشیاء (حافظه اشغال نمی‌کند)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Object</strong></td>
+                        <td>نمونه واقعی از کلاس (حافظه اشغال می‌کند)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Instance</strong></td>
+                        <td>مترادف Object؛ یک نمونه مشخص</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Constructor</strong></td>
+                        <td>سازنده؛ همنام کلاس، بدون نوع بازگشتی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Encapsulation</strong></td>
+                        <td>کپسوله‌سازی – مخفی کردن داده با <code>private</code> و دسترسی با getter/setter</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inheritance</strong></td>
+                        <td>وراثت – ارث‌بری با <code>extends</code> (رابطه IS-A)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polymorphism</strong></td>
+                        <td>چندریختی – یک نام، رفتارهای متفاوت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Abstraction</strong></td>
+                        <td>انتزاع – پنهان کردن پیچیدگی و نمایش اطلاعات ضروری</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overloading</strong></td>
+                        <td>چندین متد هم‌نام با پارامترهای متفاوت (Compile-Time)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overriding</strong></td>
+                        <td>بازنویسی متد والد در فرزند (Runtime)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic Dispatch</strong></td>
+                        <td>انتخاب متد در زمان اجرا بر اساس نوع واقعی شیء</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Abstract Class</strong></td>
+                        <td>کلاس ناقص که نمی‌توان از آن <code>new</code> کرد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interface</strong></td>
+                        <td>قرارداد رفتاری بدون پیاده‌سازی</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>روابط بین کلاس‌ها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IS-A</strong></td>
+                        <td>رابطه وراثت (Dog IS-A Animal)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HAS-A</strong></td>
+                        <td>رابطه مالکیت/ترکیب (Car HAS-A Engine)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Association</strong></td>
+                        <td>ارتباط ضعیف بین دو کلاس (Uses-a)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aggregation</strong></td>
+                        <td>تجمیع ضعیف؛ جزء مستقل از کل (دانشگاه و دانشجو)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Composition</strong></td>
+                        <td>ترکیب قوی؛ جزء وابسته به کل (خانه و اتاق)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coupling</strong></td>
+                        <td>میزان وابستگی بین کلاس‌ها (کم = خوب)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cohesion</strong></td>
+                        <td>میزان ارتباط اعضای یک کلاس (زیاد = خوب)</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>کلمات کلیدی مهم</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>کلمه</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>this</code></td>
+                        <td>ارجاع به شیء جاری</td>
+                    </tr>
+                    <tr>
+                        <td><code>super</code></td>
+                        <td>ارجاع به کلاس والد</td>
+                    </tr>
+                    <tr>
+                        <td><code>static</code></td>
+                        <td>متعلق به کلاس، نه به نمونه</td>
+                    </tr>
+                    <tr>
+                        <td><code>final</code></td>
+                        <td>غیرقابل تغییر (متغیر ثابت، متد غیرقابل Override، کلاس غیرقابل ارث‌بری)</td>
+                    </tr>
+                    <tr>
+                        <td><code>abstract</code></td>
+                        <td>کلاس/متد انتزاعی بدون پیاده‌سازی کامل</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۳: اصطلاحات Exception و Collections ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۳</span>
+                <span class="sep-title">Exception, Generics, Collections</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۳</span> اصطلاحات Exception و Collections</h1>
+        
+            <h2>استثناها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Throwable</strong></td>
+                        <td>کلاس پایه همه خطاها و استثناها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error</strong></td>
+                        <td>خطای جدی سیستم (OutOfMemoryError) – قابل بازیابی نیست</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exception</strong></td>
+                        <td>خطای قابل مدیریت در برنامه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Checked Exception</strong></td>
+                        <td>کامپایلر مجبور به catch/throws می‌کند (IOException)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unchecked Exception</strong></td>
+                        <td>خطای زمان اجرا (RuntimeException) – اختیاری</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NullPointerException</strong></td>
+                        <td>خطای دسترسی به reference با مقدار null</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ArrayIndexOutOfBoundsException</strong></td>
+                        <td>خطای دسترسی به ایندکس خارج از بازه آرایه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>try-catch-finally</strong></td>
+                        <td>ساختار مدیریت استثنا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>try-with-resources</strong></td>
+                        <td>بستن خودکار منابع (AutoCloseable)</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>جنریک‌ها (Generics)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Generics</strong></td>
+                        <td>نوع‌دهی پارامتری برای Type Safety</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type Erasure</strong></td>
+                        <td>حذف اطلاعات نوع جنریک در زمان کامپایل</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wildcard <code>?</code></strong></td>
+                        <td>نوع نامشخص در جنریک</td>
+                    </tr>
+                    <tr>
+                        <td><strong><code>? extends T</code></strong></td>
+                        <td>هر نوع که زیرکلاس T باشد (فقط خواندن)</td>
+                    </tr>
+                    <tr>
+                        <td><strong><code>? super T</code></strong></td>
+                        <td>هر نوع که اَبَرکلاس T باشد (فقط نوشتن)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PECS</strong></td>
+                        <td>Producer Extends, Consumer Super – قاعده استفاده از wildcard</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>کالکشن‌ها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Collection</strong></td>
+                        <td>اینترفیس پایه مجموعه‌ها (List, Set, Queue)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>List</strong></td>
+                        <td>مجموعه مرتب با ایندکس، اجازه تکرار دارد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Set</strong></td>
+                        <td>مجموعه بدون تکرار</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Map</strong></td>
+                        <td>ساختار کلید-مقدار (Key-Value)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Queue</strong></td>
+                        <td>صف FIFO</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deque</strong></td>
+                        <td>صف دوطرفه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stack</strong></td>
+                        <td>پشته LIFO</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ArrayList</strong></td>
+                        <td>پیاده‌سازی List با آرایه پویا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedList</strong></td>
+                        <td>پیاده‌سازی List/Deque با لیست پیوندی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HashSet</strong></td>
+                        <td>Set بدون ترتیب بر پایه hash</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TreeSet</strong></td>
+                        <td>Set مرتب بر پایه درخت سرخ-سیاه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HashMap</strong></td>
+                        <td>Map بدون ترتیب بر پایه hash</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TreeMap</strong></td>
+                        <td>Map مرتب بر پایه درخت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collision</strong></td>
+                        <td>برخورد دو کلید در یک bucket</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bucket</strong></td>
+                        <td>سبد نگهداری عناصر در hash table</td>
+                    </tr>
+                    <tr>
+                        <td><strong>hashCode / equals</strong></td>
+                        <td>قرارداد برای تشخیص برابری در HashMap</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comparable</strong></td>
+                        <td>مقایسه داخلی (compareTo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comparator</strong></td>
+                        <td>مقایسه خارجی (compare)</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>پیچیدگی (Big O)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>نماد</th>
+                        <th>نام</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>O(1)</strong></td>
+                        <td>ثابت (Constant)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O(log n)</strong></td>
+                        <td>لگاریتمی (Logarithmic)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O(n)</strong></td>
+                        <td>خطی (Linear)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O(n log n)</strong></td>
+                        <td>خطی-لگاریتمی (Linearithmic)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O(n²)</strong></td>
+                        <td>مربعی (Quadratic)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>O(2^n)</strong></td>
+                        <td>نمایی (Exponential)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۴: اصطلاحات Concurrency ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۴</span>
+                <span class="sep-title">Concurrency و Functional</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۴</span> اصطلاحات Concurrency و Functional</h1>
+        
+            <h2>هم‌روندی (Concurrency)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Thread</strong></td>
+                        <td>ریسه اجرای سبک درون یک Process</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Runnable</strong></td>
+                        <td>اینترفیس با متد <code>run()</code>، بدون مقدار بازگشتی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Callable&lt;V&gt;</strong></td>
+                        <td>اینترفیس با متد <code>call()</code>، با مقدار بازگشتی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Race Condition</strong></td>
+                        <td>شرایط رقابتی روی منابع مشترک</td>
+                    </tr>
+                    <tr>
+                        <td><strong>synchronized</strong></td>
+                        <td>قفل انحصاری برای هم‌زمانی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lock</strong></td>
+                        <td>قفل پیشرفته (ReentrantLock)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deadlock</strong></td>
+                        <td>بن‌بست بین Threadها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thread Pool</strong></td>
+                        <td>مجموعه Threadهای آماده استفاده مجدد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecutorService</strong></td>
+                        <td>مدیریت Thread Pool</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CompletableFuture</strong></td>
+                        <td>API برنامه‌نویسی async در Java 8+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>volatile</strong></td>
+                        <td>تضمین visibility متغیر بین Threadها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AtomicInteger</strong></td>
+                        <td>عملیات اتمیک روی int</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ConcurrentHashMap</strong></td>
+                        <td>Map thread-safe با قفل سطح bucket</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>برنامه‌نویسی تابعی</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Lambda</strong></td>
+                        <td>تابع بی‌نام و مختصر <code>() -> ...</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Functional Interface</strong></td>
+                        <td>اینترفیس با یک متد abstract</td>
+                    </tr>
+                    <tr>
+                        <td><strong>@FunctionalInterface</strong></td>
+                        <td>انوتیشن تضمین تک‌متدی بودن</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Predicate&lt;T&gt;</strong></td>
+                        <td>ورودی T → boolean</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Function&lt;T,R&gt;</strong></td>
+                        <td>ورودی T → خروجی R</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consumer&lt;T&gt;</strong></td>
+                        <td>ورودی T → بدون خروجی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supplier&lt;T&gt;</strong></td>
+                        <td>بدون ورودی → خروجی T</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stream API</strong></td>
+                        <td>API پردازش اعلانی مجموعه‌داده‌ها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intermediate Operation</strong></td>
+                        <td>عملیات میانی و Lazy (filter, map, sorted)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Terminal Operation</strong></td>
+                        <td>عملیات پایانی که Stream را اجرا می‌کند (collect, forEach)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lazy Evaluation</strong></td>
+                        <td>اجرای عملیات فقط هنگام نیاز</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optional</strong></td>
+                        <td>ظرف امن برای مقدار ممکن null</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Default Method</strong></td>
+                        <td>متد با بدنه در Interface (Java 8+)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Static Method</strong></td>
+                        <td>متد static در Interface</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۵: اصطلاحات دیتابیس و شبکه ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۵</span>
+                <span class="sep-title">اصطلاحات Database و Network</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۵</span> اصطلاحات پایگاه داده و شبکه</h1>
+        
+            <h2>پایگاه داده</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Primary Key (PK)</strong></td>
+                        <td>کلید اصلی، یکتا، نمی‌تواند null باشد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Foreign Key (FK)</strong></td>
+                        <td>کلید خارجی، اشاره به PK جدول دیگر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Index</strong></td>
+                        <td>ساختمان داده (B-Tree) برای افزایش سرعت SELECT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Normalization</strong></td>
+                        <td>نرمال‌سازی برای کاهش افزونگی داده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1NF</strong></td>
+                        <td>هر خانه تک‌مقداری و Atomic باشد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2NF</strong></td>
+                        <td>هیچ صفت غیرکلیدی به بخشی از کلید ترکیبی وابسته نباشد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3NF</strong></td>
+                        <td>هیچ صفت غیرکلیدی به صفت غیرکلیدی دیگر وابسته نباشد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>INNER JOIN</strong></td>
+                        <td>فقط سطرهای منطبق در هر دو جدول</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LEFT JOIN</strong></td>
+                        <td>همه چپ + منطبق‌های راست (NULL اگر نبود)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GROUP BY</strong></td>
+                        <td>گروه‌بندی سطرها برای توابع تجمعی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HAVING</strong></td>
+                        <td>فیلتر روی گروه‌های بعد از GROUP BY</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ACID</strong></td>
+                        <td>Atomicity, Consistency, Isolation, Durability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction</strong></td>
+                        <td>واحد کاری اتمیک</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Commit / Rollback</strong></td>
+                        <td>تأیید / بازگردانی تراکنش</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Isolation Level</strong></td>
+                        <td>سطح جداسازی تراکنش‌ها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dirty Read</strong></td>
+                        <td>خواندن داده‌ای که هنوز Commit نشده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Redis</strong></td>
+                        <td>دیتابیس In-Memory از نوع Key-Value</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NoSQL</strong></td>
+                        <td>دیتابیس غیررابطه‌ای (MongoDB, Cassandra)</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>شبکه</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>OSI Model</strong></td>
+                        <td>مدل ۷ لایه مرجع شبکه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TCP/IP Model</strong></td>
+                        <td>مدل ۴ لایه عملی اینترنت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TCP</strong></td>
+                        <td>پروتکل مطمئن و اتصال‌گرا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UDP</strong></td>
+                        <td>پروتکل سریع و غیراتصال‌گرا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Three-way Handshake</strong></td>
+                        <td>برقراری اتصال TCP: SYN, SYN-ACK, ACK</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTP</strong></td>
+                        <td>پروتکل درخواست-پاسخ بدون حالت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTPS</strong></td>
+                        <td>HTTP روی TLS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GET / POST / PUT / DELETE</strong></td>
+                        <td>متدهای اصلی HTTP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Idempotent</strong></td>
+                        <td>متدی که تکرارش نتیجه یکسان دارد (GET, PUT, DELETE)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status Code</strong></td>
+                        <td>کد وضعیت پاسخ (200, 201, 400, 401, 403, 404, 500, ...)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>REST API</strong></td>
+                        <td>سبک معماری مبتنی بر منابع و متدهای HTTP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stateless</strong></td>
+                        <td>بدون نگهداری وضعیت بین درخواست‌ها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JWT</strong></td>
+                        <td>JSON Web Token برای احراز هویت Stateless</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CORS</strong></td>
+                        <td>اشتراک منابع بین دامنه‌ای</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DNS</strong></td>
+                        <td>سیستم تبدیل نام دامنه به IP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TLS/SSL</strong></td>
+                        <td>پروتکل رمزنگاری ارتباط</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CDN</strong></td>
+                        <td>شبکه توزیع محتوا برای پخش سریع</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Load Balancer</strong></td>
+                        <td>توزیع‌کننده بار بین سرورها</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۶: اصطلاحات Spring Framework ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۶</span>
+                <span class="sep-title">اصطلاحات Spring Framework</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۶</span> اصطلاحات Spring Framework</h1>
+        
+            <h2>مفاهیم پایه Spring</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Spring Framework</strong></td>
+                        <td>فریمورک جامع جاوا برای ساخت اپلیکیشن‌های سازمانی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spring Boot</strong></td>
+                        <td>لایه‌ای روی Spring برای ساده‌سازی راه‌اندازی و پیکربندی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IoC (Inversion of Control)</strong></td>
+                        <td>وارونگی کنترل – Spring کنترل ساخت و مدیریت اشیاء را به‌دست می‌گیرد</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DI (Dependency Injection)</strong></td>
+                        <td>تزریق وابستگی – Spring وابستگی‌های Bean را تزریق می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bean</strong></td>
+                        <td>شیء مدیریت‌شده توسط Spring Container</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ApplicationContext</strong></td>
+                        <td>Container اصلی Spring که Beanها را مدیریت می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BeanFactory</strong></td>
+                        <td>Container پایه و سبک‌تر Spring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Component Scan</strong></td>
+                        <td>اسکن پکیج‌ها برای پیدا کردن Beanها با <code>@Component</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Auto-Configuration</strong></td>
+                        <td>پیکربندی خودکار Spring Boot بر اساس Classpath</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>Annotationهای اصلی Spring</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Annotation</th>
+                        <th>کاربرد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>@Component</code></td>
+                        <td>Bean عمومی</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Service</code></td>
+                        <td>Bean لایه Business Logic</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Repository</code></td>
+                        <td>Bean لایه دسترسی داده</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Controller</code></td>
+                        <td>Bean کنترلر MVC</td>
+                    </tr>
+                    <tr>
+                        <td><code>@RestController</code></td>
+                        <td>کنترلر REST (ترکیب @Controller + @ResponseBody)</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Configuration</code></td>
+                        <td>کلاس پیکربندی Beanها</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Bean</code></td>
+                        <td>تعریف Bean در متد</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Autowired</code></td>
+                        <td>تزریق خودکار وابستگی</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Qualifier</code></td>
+                        <td>انتخاب Bean مشخص</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Primary</code></td>
+                        <td>Bean پیش‌فرض در تزریق</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Value</code></td>
+                        <td>تزریق مقدار از property</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Scope</code></td>
+                        <td>تعیین scope (singleton, prototype, ...)</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PostConstruct</code></td>
+                        <td>اجرا بعد از ساخت Bean</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PreDestroy</code></td>
+                        <td>اجرا قبل از نابودی Bean</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Transactional</code></td>
+                        <td>مدیریت تراکنش</td>
+                    </tr>
+                    <tr>
+                        <td><code>@SpringBootApplication</code></td>
+                        <td>ترکیب سه انوتیشن اصلی Spring Boot</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>Annotationهای MVC و REST</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Annotation</th>
+                        <th>کاربرد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>@RequestMapping</code></td>
+                        <td>نگاشت مسیر</td>
+                    </tr>
+                    <tr>
+                        <td><code>@GetMapping</code></td>
+                        <td>نگاشت GET</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PostMapping</code></td>
+                        <td>نگاشت POST</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PutMapping</code></td>
+                        <td>نگاشت PUT</td>
+                    </tr>
+                    <tr>
+                        <td><code>@DeleteMapping</code></td>
+                        <td>نگاشت DELETE</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PathVariable</code></td>
+                        <td>استخراج متغیر از مسیر</td>
+                    </tr>
+                    <tr>
+                        <td><code>@RequestParam</code></td>
+                        <td>استخراج پارامتر درخواست</td>
+                    </tr>
+                    <tr>
+                        <td><code>@RequestBody</code></td>
+                        <td>استخراج بدنه درخواست</td>
+                    </tr>
+                    <tr>
+                        <td><code>@ResponseBody</code></td>
+                        <td>بدنه پاسخ مستقیماً برگردانده می‌شود</td>
+                    </tr>
+                    <tr>
+                        <td><code>@ExceptionHandler</code></td>
+                        <td>مدیریت استثنا</td>
+                    </tr>
+                    <tr>
+                        <td><code>@ControllerAdvice</code></td>
+                        <td>مشاور سراسری کنترلرها</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۷: اصطلاحات JPA و Hibernate ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۷</span>
+                <span class="sep-title">اصطلاحات JPA و Hibernate</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۷</span> اصطلاحات JPA و Hibernate</h1>
+        
+            <h2>مفاهیم پایه</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ORM</strong></td>
+                        <td>Object-Relational Mapping – نگاشت اشیاء جاوا به جداول دیتابیس</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JPA</strong></td>
+                        <td>Java Persistence API – استاندارد ORM در جاوا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hibernate</strong></td>
+                        <td>محبوب‌ترین پیاده‌سازی JPA</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spring Data JPA</strong></td>
+                        <td>لایه بالاتر از JPA برای ساده‌تر کردن کد دیتابیس</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Entity</strong></td>
+                        <td>کلاس جاوا که به جدول دیتابیس نگاشت می‌شود</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Persistence Context</strong></td>
+                        <td>حافظه موقت (First-Level Cache) Hibernate برای Entityهای مدیریت‌شده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Session / EntityManager</strong></td>
+                        <td>مدیر اصلی Entityها و تراکنش‌ها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SessionFactory</strong></td>
+                        <td>کارخانه ساخت Session (Singleton، Thread-Safe)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dirty Checking</strong></td>
+                        <td>تشخیص خودکار تغییرات Entity و اجرای UPDATE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flush</strong></td>
+                        <td>ارسال SQLهای معلق به دیتابیس (بدون Commit)</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>Annotationهای JPA</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Annotation</th>
+                        <th>کاربرد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>@Entity</code></td>
+                        <td>تعریف کلاس به‌عنوان Entity</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Table</code></td>
+                        <td>تعیین نام جدول</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Id</code></td>
+                        <td>تعیین کلید اصلی</td>
+                    </tr>
+                    <tr>
+                        <td><code>@GeneratedValue</code></td>
+                        <td>تولید خودکار کلید</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Column</code></td>
+                        <td>تنظیم ستون</td>
+                    </tr>
+                    <tr>
+                        <td><code>@OneToMany</code></td>
+                        <td>رابطه یک‌به‌چند</td>
+                    </tr>
+                    <tr>
+                        <td><code>@ManyToOne</code></td>
+                        <td>رابطه چند‌به‌یک</td>
+                    </tr>
+                    <tr>
+                        <td><code>@OneToOne</code></td>
+                        <td>رابطه یک‌به‌یک</td>
+                    </tr>
+                    <tr>
+                        <td><code>@ManyToMany</code></td>
+                        <td>رابطه چند‌به‌چند</td>
+                    </tr>
+                    <tr>
+                        <td><code>@JoinColumn</code></td>
+                        <td>تعیین ستون کلید خارجی</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Version</code></td>
+                        <td>فیلد نسخه برای Optimistic Locking</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Transient</code></td>
+                        <td>فیلد غیرنگاشت‌شده</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>مفاهیم مهم</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>FetchType.EAGER</strong></td>
+                        <td>بارگذاری فوری رابطه</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FetchType.LAZY</strong></td>
+                        <td>بارگذاری با تأخیر (پیش‌فرض OneToMany)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>N+1 Query Problem</strong></td>
+                        <td>اجرای N کوئری اضافی برای روابط Lazy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JOIN FETCH</strong></td>
+                        <td>بارگذاری رابطه در یک کوئری</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EntityGraph</strong></td>
+                        <td>تعیین گراف بارگذاری موجودیت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cascade</strong></td>
+                        <td>انتشار عملیات به Entityهای مرتبط</td>
+                    </tr>
+                    <tr>
+                        <td><strong>orphanRemoval</strong></td>
+                        <td>حذف فرزند وقتی از لیست والد حذف می‌شود</td>
+                    </tr>
+                    <tr>
+                        <td><strong>mappedBy</strong></td>
+                        <td>سمت مالکیت رابطه را مشخص می‌کند</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optimistic Locking</strong></td>
+                        <td>قفل خوش‌بینانه با ستون version</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pessimistic Locking</strong></td>
+                        <td>قفل بدبینانه در دیتابیس</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۸: اصطلاحات امنیت ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۸</span>
+                <span class="sep-title">اصطلاحات امنیت</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۸</span> اصطلاحات امنیت</h1>
+        
+            <h2>مفاهیم پایه</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Authentication</strong></td>
+                        <td>احراز هویت – «تو کی هستی؟» (401 اگر ناموفق)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Authorization</strong></td>
+                        <td>مجوزدهی – «چه کاری می‌تونی انجام بدی؟» (403 اگر ناموفق)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hashing</strong></td>
+                        <td>تبدیل یک‌طرفه داده به هش</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Salt</strong></td>
+                        <td>مقدار تصادفی افزوده به رمز قبل از هش</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BCrypt</strong></td>
+                        <td>الگوریتم هش رمز کند و امن</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JWT</strong></td>
+                        <td>JSON Web Token – توکن احراز هویت Stateless</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payload</strong></td>
+                        <td>بخش داده‌های JWT (فقط Base64، نه Encrypt)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature</strong></td>
+                        <td>امضای دیجیتال JWT برای تشخیص دستکاری</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Session</strong></td>
+                        <td>نگهداری وضعیت کاربر در سرور</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cookie</strong></td>
+                        <td>داده ذخیره‌شده در مرورگر</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>آسیب‌پذیری‌ها (OWASP)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SQL Injection</strong></td>
+                        <td>تزریق SQL از ورودی کاربر (راه حل: PreparedStatement)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>XSS</strong></td>
+                        <td>Cross-Site Scripting – تزریق اسکریپت در مرورگر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSRF</strong></td>
+                        <td>Cross-Site Request Forgery – جعل درخواست از سایت دیگر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSRF Token</strong></td>
+                        <td>توکن ضد CSRF</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OWASP Top 10</strong></td>
+                        <td>فهرست ده آسیب‌پذیری مهم وب</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>Spring Security</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Spring Security</strong></td>
+                        <td>فریمورک امنیت Spring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SecurityFilterChain</strong></td>
+                        <td>زنجیره فیلترهای امنیتی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AuthenticationManager</strong></td>
+                        <td>مدیر احراز هویت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PasswordEncoder</strong></td>
+                        <td>اینترفیس هش رمز (BCrypt, SCrypt, Argon2)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>UserDetailsService</strong></td>
+                        <td>سرویس بارگذاری کاربر از دیتابیس</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SecurityContext</strong></td>
+                        <td>نگهدارنده اطلاعات احراز هویت جاری</td>
+                    </tr>
+                    <tr>
+                        <td><code>@PreAuthorize</code></td>
+                        <td>بررسی مجوز قبل از اجرای متد</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Secured</code></td>
+                        <td>بررسی نقش ساده</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۲۹: اصطلاحات تست و DevOps ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۲۹</span>
+                <span class="sep-title">اصطلاحات Testing و DevOps</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۹</span> اصطلاحات Testing و DevOps</h1>
+        
+            <h2>تست‌نویسی</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Unit Test</strong></td>
+                        <td>تست یک واحد کوچک به‌تنهایی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integration Test</strong></td>
+                        <td>تست تعامل چند ماژول با هم</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E2E Test</strong></td>
+                        <td>تست کامل جریان از ابتدا تا انتها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Test Pyramid</strong></td>
+                        <td>Unit زیاد، Integration متوسط، E2E کم</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FIRST</strong></td>
+                        <td>Fast, Independent, Repeatable, Self-Validating, Timely</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Given-When-Then</strong></td>
+                        <td>ساختار تست (زمینه-اقدام-انتظار)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mock</strong></td>
+                        <td>شیء جعلی برای شبیه‌سازی وابستگی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stub</strong></td>
+                        <td>پاسخ از پیش تعیین‌شده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JUnit 5</strong></td>
+                        <td>فریمورک تست جاوا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mockito</strong></td>
+                        <td>فریمورک mock‌سازی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TDD</strong></td>
+                        <td>Test-Driven Development – Red-Green-Refactor</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Coverage</strong></td>
+                        <td>درصد کد پوشش‌داده‌شده توسط تست‌ها</td>
+                    </tr>
+                    <tr>
+                        <td><code>@SpringBootTest</code></td>
+                        <td>تست کامل Context Spring</td>
+                    </tr>
+                    <tr>
+                        <td><code>@WebMvcTest</code></td>
+                        <td>تست لایه Controller</td>
+                    </tr>
+                    <tr>
+                        <td><code>@DataJpaTest</code></td>
+                        <td>تست لایه JPA</td>
+                    </tr>
+                    <tr>
+                        <td><code>@Mock</code> vs <code>@MockBean</code></td>
+                        <td>Mockito ساده vs Mock در Spring Context</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>DevOps و ابزارها</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DevOps</strong></td>
+                        <td>فرهنگ همکاری Development و Operations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CI/CD</strong></td>
+                        <td>Continuous Integration / Continuous Deployment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Docker</strong></td>
+                        <td>پلتفرم کانتینری‌سازی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Container</strong></td>
+                        <td>نمونه اجرایی سبک از ایمیج</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Image</strong></td>
+                        <td>قالب فقط‌خواندنی برای ساخت کانتینر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dockerfile</strong></td>
+                        <td>فایل دستورات ساخت ایمیج</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Docker Compose</strong></td>
+                        <td>ابزار مدیریت چند کانتینر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kubernetes</strong></td>
+                        <td>ارکستراتور کانتینر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pod</strong></td>
+                        <td>کوچک‌ترین واحد اجرایی K8s</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deployment</strong></td>
+                        <td>مدیریت نسخه‌ها و replicaهای Pod</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service</strong></td>
+                        <td>نقطه دسترسی پایدار به Podها</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Apache Kafka</strong></td>
+                        <td>پلتفرم streaming توزیع‌شده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Producer / Consumer</strong></td>
+                        <td>تولیدکننده / مصرف‌کننده پیام</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topic / Partition</strong></td>
+                        <td>کانال پیام‌ها / بخش‌های موازی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jenkins / GitHub Actions</strong></td>
+                        <td>ابزارهای CI/CD</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ================= صفحه ۳۰: اصطلاحات Logging, Build Tools, Thymeleaf ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه ۳۰</span>
+                <span class="sep-title">Logging, Build Tools, Thymeleaf</span>
+                <span class="sep-line"></span>
+            </div>
+        
+            <h1><span class="phase-num">T۱۰</span> اصطلاحات Logging, Build Tools, Thymeleaf</h1>
+        
+            <h2>لاگ‌گیری</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SLF4J</strong></td>
+                        <td>Facade برای کتابخانه‌های لاگ‌گیری</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Logback</strong></td>
+                        <td>پیاده‌سازی پیش‌فرض SLF4J در Spring Boot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Log4j2</strong></td>
+                        <td>جایگزین Logback با سرعت بالاتر</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Log Levels</strong></td>
+                        <td>TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MDC</strong></td>
+                        <td>Mapped Diagnostic Context – ذخیره اطلاعات درخواست در لاگ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Appender</strong></td>
+                        <td>مقصد لاگ (Console, File, Socket)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rolling Policy</strong></td>
+                        <td>سیاست چرخش فایل لاگ</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>ابزارهای Build</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Maven</strong></td>
+                        <td>ابزار build و مدیریت وابستگی مبتنی بر XML (pom.xml)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gradle</strong></td>
+                        <td>ابزار build مدرن مبتنی بر Groovy/Kotlin</td>
+                    </tr>
+                    <tr>
+                        <td><strong>pom.xml</strong></td>
+                        <td>فایل پیکربندی Maven</td>
+                    </tr>
+                    <tr>
+                        <td><strong>build.gradle</strong></td>
+                        <td>فایل پیکربندی Gradle</td>
+                    </tr>
+                    <tr>
+                        <td><strong>groupId / artifactId / version</strong></td>
+                        <td>شناسه‌های پروژه Maven</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>دامنه وابستگی (compile, provided, runtime, test)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>mvn clean install</strong></td>
+                        <td>پاک‌سازی و ساخت و نصب در مخزن محلی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>./gradlew build</strong></td>
+                        <td>ساخت پروژه Gradle</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>Thymeleaf و JSP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Thymeleaf</strong></td>
+                        <td>موتور قالب‌سازی مدرن Spring Boot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Natural Templating</strong></td>
+                        <td>قالب قابل نمایش در مرورگر بدون پردازش</td>
+                    </tr>
+                    <tr>
+                        <td><strong>th:text</strong></td>
+                        <td>درج متن در عنصر HTML</td>
+                    </tr>
+                    <tr>
+                        <td><strong>th:if / th:each</strong></td>
+                        <td>شرط / حلقه در Thymeleaf</td>
+                    </tr>
+                    <tr>
+                        <td><strong>th:href / th:action</strong></td>
+                        <td>لینک / آدرس فرم</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fragment</strong></td>
+                        <td>قطعه قابل استفاده مجدد در Thymeleaf</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JSP</strong></td>
+                        <td>JavaServer Pages – فناوری قدیمی قالب‌ساز</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JSTL</strong></td>
+                        <td>کتابخانه تگ استاندارد JSP</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h2>مفاهیم طراحی</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اصطلاح</th>
+                        <th>توضیح</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Design Pattern</strong></td>
+                        <td>راه‌حل تکرارپذیر برای مشکل رایج طراحی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Singleton</strong></td>
+                        <td>تضمین یک نمونه از کلاس</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Factory</strong></td>
+                        <td>ساخت اشیاء بدون افشای منطق ساخت</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Builder</strong></td>
+                        <td>ساخت گام‌به‌گام اشیاء پیچیده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strategy</strong></td>
+                        <td>الگوریتم قابل تعویض در زمان اجرا</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Observer</strong></td>
+                        <td>اطلاع‌رسانی تغییرات به اشیاء وابسته</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proxy</strong></td>
+                        <td>نماینده برای کنترل دسترسی</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Facade</strong></td>
+                        <td>رابط ساده برای زیرسیستم پیچیده</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Adapter</strong></td>
+                        <td>تبدیل رابط ناسازگار به رابط مورد انتظار</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decorator</strong></td>
+                        <td>افزودن رفتار پویا به شیء</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- پایان book -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('pre code').forEach(function (block) {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
