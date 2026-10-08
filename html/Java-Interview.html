@@ -2640,16 +2640,448 @@ public class UserController {
             </div>
         </div>
 
+        <!-- ================= صفحه T۱۱: Dependency Injection در Spring ================= -->
+        <div class="page">
+            <div class="page-separator">
+                <span class="sep-label">صفحه T۱۱</span>
+                <span class="sep-title">Dependency Injection در Spring</span>
+                <span class="sep-line"></span>
+            </div>
+
+            <h1><span class="phase-num">T۱۱</span> تزریق وابستگی (Dependency Injection)</h1>
+
+            <p>
+                <strong>Dependency Injection (DI)</strong> یکی از مفاهیم پایه‌ای Spring است. به جای اینکه خودت داخل کلاس
+                با
+                <code>new</code> کردن وابستگی‌ها را بسازی، Spring آن‌ها را به کلاس تو <strong>تزریق</strong> می‌کند. سه
+                روش اصلی
+                برای تزریق وجود دارد: <strong>Constructor</strong>، <strong>Setter</strong> و <strong>Field</strong>.
+            </p>
+
+            <div class="note">
+                <strong>نکته مصاحبه:</strong> این سوال تقریباً در ۹۰٪ مصاحبه‌های Spring پرسیده می‌شود: «کدام نوع تزریق
+                بهتر است
+                و چرا؟» پاسخ کوتاه: <strong>Constructor Injection</strong>.
+            </div>
+
+            <h2>۱. Constructor Injection (تزریق از طریق سازنده) ⭐ توصیه شده</h2>
+
+            <p>وابستگی‌ها از طریق سازنده کلاس تزریق می‌شوند. Spring وابستگی را در زمان ساخت Bean تزریق می‌کند.</p>
+
+            <pre><code class="language-java">@Service
+        public class UserService {
+        
+            private final UserRepository userRepository;
+            private final EmailService emailService;
+        
+            // فقط یک سازنده داری، پس نیازی به @Autowired نیست
+            public UserService(UserRepository userRepository,
+                               EmailService emailService) {
+                this.userRepository = userRepository;
+                this.emailService = emailService;
+            }
+        
+            public User findUser(Long id) {
+                return userRepository.findById(id).orElseThrow();
+            }
+        }</code></pre>
+
+            <h3>مزایا</h3>
+            <ul>
+                <li><strong>Immutable:</strong> فیلدها می‌توانند <code>final</code> باشند، پس کسی نمی‌تواند بعداً آن‌ها
+                    را عوض
+                    کند.</li>
+                <li><strong>Null-Safety:</strong> اگر وابستگی اجباری باشد، Spring اجازه نمی‌دهد Bean بدون آن ساخته شود.
+                </li>
+                <li><strong>Test-Friendly:</strong> در تست، به‌راحتی می‌توانی mockها را در سازنده پاس بدهی، بدون نیاز به
+                    Spring.
+                </li>
+                <li><strong>جلوگیری از Circular Dependency:</strong> اگر دو Bean به هم وابسته باشند، Spring در زمان
+                    راه‌اندازی
+                    خطا می‌دهد و مشکل را زودتر می‌فهمی.</li>
+                <li><strong>Fails Fast:</strong> اگر وابستگی موجود نباشد، برنامه در زمان راه‌اندازی خطا می‌دهد، نه در
+                    زمان اجرا.
+                </li>
+            </ul>
+
+            <h3>معایب</h3>
+            <ul>
+                <li>اگر وابستگی‌ها زیاد باشند، سازنده طولانی و شلوغ می‌شود (که خودش نشانه‌ی طراحی بد است).</li>
+            </ul>
+
+            <div class="note">
+                <strong>نکته:</strong> اگر کلاس فقط <strong>یک سازنده</strong> داشته باشد، از Spring 4.3 به بعد نیازی به
+                نوشتن
+                <code>@Autowired</code> روی سازنده نیست. Spring خودش آن را تشخیص می‌دهد.
+            </div>
+
+            <h2>۲. Setter Injection (تزریق از طریق Setter)</h2>
+
+            <p>وابستگی‌ها بعد از ساخت Bean از طریق متد setter تزریق می‌شوند.</p>
+
+            <pre><code class="language-java">@Service
+        public class UserService {
+        
+            private UserRepository userRepository;
+            private EmailService emailService;
+        
+            @Autowired
+            public void setUserRepository(UserRepository userRepository) {
+                this.userRepository = userRepository;
+            }
+        
+            @Autowired
+            public void setEmailService(EmailService emailService) {
+                this.emailService = emailService;
+            }
+        
+            public User findUser(Long id) {
+                return userRepository.findById(id).orElseThrow();
+            }
+        }</code></pre>
+
+            <h3>مزایا</h3>
+            <ul>
+                <li><strong>وابستگی‌های اختیاری:</strong> می‌توانی وابستگی‌های اختیاری را با setter تزریق کنی.</li>
+                <li><strong>قابلیت تغییر در زمان اجرا:</strong> می‌توانی بعداً مقدار را عوض کنی (که معمولاً مطلوب نیست).
+                </li>
+                <li><strong>جلوگیری از Circular Dependency:</strong> در برخی موارد می‌تواند مشکل وابستگی حلقه‌ای را دور
+                    بزند.
+                </li>
+            </ul>
+
+            <h3>معایب</h3>
+            <ul>
+                <li>نمی‌توانی فیلد را <code>final</code> کنی، پس Immutable نیست.</li>
+                <li>اگر setter صدا زده نشود، فیلد <code>null</code> می‌ماند و ممکن است در زمان اجرا
+                    <code>NullPointerException</code> بگیری.
+                </li>
+                <li>نوشتن تست سخت‌تر است چون باید setterها را دستی صدا بزنی.</li>
+                <li>کد طولانی‌تر می‌شود.</li>
+            </ul>
+
+            <h2>۳. Field Injection (تزریق مستقیم روی فیلد) ⚠️ توصیه نمی‌شود</h2>
+
+            <p>Spring مستقیماً روی فیلد تزریق می‌کند. این ساده‌ترین روش است ولی خیلی از متخصصین آن را توصیه نمی‌کنند.
+            </p>
+
+            <pre><code class="language-java">@Service
+        public class UserService {
+        
+            @Autowired
+            private UserRepository userRepository;
+        
+            @Autowired
+            private EmailService emailService;
+        
+            public User findUser(Long id) {
+                return userRepository.findById(id).orElseThrow();
+            }
+        }</code></pre>
+
+            <h3>مزایا</h3>
+            <ul>
+                <li><strong>سادگی:</strong> کد کوتاه و مختصر است.</li>
+                <li><strong>خوانایی ظاهری:</strong> برای کد کوتاه سریع‌تر نوشته می‌شود.</li>
+            </ul>
+
+            <h3>معایب</h3>
+            <ul>
+                <li><strong>نمی‌تواند <code>final</code> باشد:</strong> فیلدهای immutable نمی‌توانند داشته باشی.</li>
+                <li><strong>تست سخت:</strong> در Unit Test بدون Spring نمی‌توانی مقدار فیلد را تنظیم کنی (باید از
+                    Reflection
+                    استفاده کنی یا <code>@SpringBootTest</code> بزنی).</li>
+                <li><strong>پنهان کردن وابستگی‌ها:</strong> وقتی به سازنده نگاه می‌کنی، نمی‌فهمی این کلاس چه
+                    وابستگی‌هایی دارد.
+                </li>
+                <li><strong>Circular Dependency را پنهان می‌کند:</strong> Spring در برخی موارد می‌تواند آن را راه‌اندازی
+                    کند ولی
+                    این یعنی مشکل طراحی داری.</li>
+                <li><strong>SRP را نقض می‌کند:</strong> نمی‌توانی چندین وابستگی پشت سر هم بگذاری و از قانون تک‌مسئولیتی
+                    مطمئن
+                    شوی.</li>
+                <li><strong>Fails Late:</strong> اگر وابستگی موجود نباشد، در زمان اجرای متد خطا می‌گیری، نه در زمان
+                    راه‌اندازی.
+                </li>
+            </ul>
+
+            <h2>📊 مقایسه سه روش</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ویژگی</th>
+                        <th>Constructor</th>
+                        <th>Setter</th>
+                        <th>Field</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>امکان <code>final</code></td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Immutable</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Null-Safety</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Test-Friendly (بدون Spring)</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>جلوگیری از Circular Dependency</td>
+                        <td>✅</td>
+                        <td>⚠️</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Fails Fast</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>خوانایی و شفافیت وابستگی‌ها</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>وابستگی اختیاری</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>سادگی و کوتاهی کد</td>
+                        <td>⚠️</td>
+                        <td>⚠️</td>
+                        <td>✅</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>قانون طلایی Spring:</strong> از <strong>Constructor Injection</strong> استفاده کن. فقط در صورتی
+                که
+                وابستگی واقعاً اختیاری باشد، از <strong>Setter Injection</strong> استفاده کن. از <strong>Field
+                    Injection</strong> تا حد امکان پرهیز کن.
+            </div>
+
+            <h2>🧪 مثال کامل با Constructor Injection (توصیه‌شده)</h2>
+
+            <pre><code class="language-java">@Service
+        public class OrderService {
+        
+            private final OrderRepository orderRepository;
+            private final PaymentService paymentService;
+            private final EmailService emailService;
+        
+            public OrderService(OrderRepository orderRepository,
+                                PaymentService paymentService,
+                                EmailService emailService) {
+                this.orderRepository = orderRepository;
+                this.paymentService = paymentService;
+                this.emailService = emailService;
+            }
+        
+            @Transactional
+            public Order createOrder(OrderRequest request) {
+                Order order = new Order(request);
+                orderRepository.save(order);
+        
+                paymentService.process(order);
+                emailService.sendConfirmation(order);
+        
+                return order;
+            }
+        }</code></pre>
+
+            <h2>🧪 همان مثال با تست (نشان دادن مزیت Constructor)</h2>
+
+            <pre><code class="language-java">class OrderServiceTest {
+        
+            @Test
+            void shouldCreateOrder() {
+                // mockها را مستقیم در سازنده پاس می‌دهیم
+                OrderRepository orderRepo = mock(OrderRepository.class);
+                PaymentService paymentService = mock(PaymentService.class);
+                EmailService emailService = mock(EmailService.class);
+        
+                // بدون Spring، بدون Reflection
+                OrderService service = new OrderService(orderRepo, paymentService, emailService);
+        
+                OrderRequest request = new OrderRequest("book", 100);
+                Order result = service.createOrder(request);
+        
+                assertNotNull(result);
+                verify(orderRepo).save(any(Order.class));
+                verify(paymentService).process(any(Order.class));
+            }
+        }</code></pre>
+
+            <div class="note">
+                <strong>تفاوت مهم:</strong> در Constructor Injection می‌توانی بدون Spring تست بنویسی. در Field Injection
+                مجبوری
+                از <code>@SpringBootTest</code> استفاده کنی که کندتر است یا از Reflection که زشت است.
+            </div>
+
+            <h2>❓ سوالات مصاحبه‌ای این بخش</h2>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۱</div>
+                <div class="q">کدام نوع تزریق در Spring توصیه می‌شود و چرا؟</div>
+                <div class="a">
+                    <strong>Constructor Injection</strong>، چون:
+                    <ul>
+                        <li>فیلدها می‌توانند <code>final</code> باشند (Immutable).</li>
+                        <li>Null-Safety دارد.</li>
+                        <li>در تست، بدون Spring می‌توانی وابستگی‌ها را پاس بدهی.</li>
+                        <li>اگر وابستگی موجود نباشد، در زمان راه‌اندازی خطا می‌دهد (Fails Fast).</li>
+                        <li>Circular Dependency را نمی‌پذیرد و مشکل طراحی را زود نشان می‌دهد.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۲</div>
+                <div class="q">آیا Field Injection بد است؟ اگر بله، چرا؟</div>
+                <div class="a">
+                    بله. به این دلایل:
+                    <ul>
+                        <li>نمی‌توانی فیلد را <code>final</code> کنی.</li>
+                        <li>تست بدون Spring خیلی سخت است (نیاز به Reflection یا <code>@SpringBootTest</code>).</li>
+                        <li>وابستگی‌ها از دید سازنده پنهان می‌مانند.</li>
+                        <li>Circular Dependency را پنهان می‌کند.</li>
+                        <li>اگر وابستگی نبود، در زمان اجرا خطا می‌گیری نه در زمان راه‌اندازی.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۳</div>
+                <div class="q">آیا <code>@Autowired</code> روی Constructor لازم است؟</div>
+                <div class="a">
+                    خیر. اگر کلاس فقط <strong>یک سازنده</strong> داشته باشد، Spring از نسخه ۴.۳ به بعد خودش آن را تشخیص
+                    می‌دهد و
+                    نیازی به <code>@Autowired</code> نیست. اما اگر چند سازنده داشته باشی، باید یکی را با
+                    <code>@Autowired</code>
+                    مشخص کنی.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۴</div>
+                <div class="q">Setter Injection کجا استفاده می‌شود؟</div>
+                <div class="a">
+                    وقتی وابستگی <strong>اختیاری</strong> است و می‌خواهی بعداً قابل تنظیم باشد. مثلاً در برخی
+                    کتابخانه‌ها یا
+                    JMX. اما در کدهای روزمره Business Logic، معمولاً Constructor Injection کافی است.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۵</div>
+                <div class="q">Circular Dependency چیه و کدام نوع تزریق آن را نشان می‌دهد؟</div>
+                <div class="a">
+                    وقتی دو Bean به هم وابسته باشند (A به B و B به A). در Constructor Injection، Spring در زمان
+                    راه‌اندازی خطا
+                    می‌دهد و تو باید طراحی را اصلاح کنی. در Field Injection و Setter Injection، Spring ممکن است آن را
+                    راه‌اندازی
+                    کند، ولی این یعنی یک مشکل طراحی وجود دارد که پنهان شده است.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۶</div>
+                <div class="q">آیا می‌توانی یک کلاس را با Constructor Injection و بدون Spring تست کنی؟</div>
+                <div class="a">
+                    بله! چون وابستگی‌ها در سازنده پاس داده می‌شوند، می‌توانی mockها را مستقیم در سازنده قرار دهی:
+                    <pre><code class="language-java">OrderService service = new OrderService(
+            mock(OrderRepository.class),
+            mock(PaymentService.class),
+            mock(EmailService.class)
+        );</code></pre>
+                    این باعث می‌شود تست‌های Unit سریع و مستقل باشند.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="badge">سوال مصاحبه ۷</div>
+                <div class="q">اگر یک کلاس ۷ وابستگی داشته باشد چه باید کرد؟</div>
+                <div class="a">
+                    این نشانه‌ی نقض <strong>SRP</strong> (تک‌مسئولیتی) است. کلاس باید به کلاس‌های کوچک‌تر تقسیم شود.
+                    Constructor
+                    Injection خودش به تو سیگنال می‌دهد که کلاس دارد بزرگ می‌شود چون سازنده‌اش طولانی شده. این یکی از
+                    مزایای
+                    پنهان Constructor Injection است.
+                </div>
+            </div>
+
+            <h2>📝 خلاصه یک‌صفحه‌ای</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>روش</th>
+                        <th>کِی استفاده کنیم؟</th>
+                        <th>نکته کلیدی</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Constructor</strong></td>
+                        <td>همیشه (پیش‌فرض توصیه‌شده)</td>
+                        <td>Immutable + Null-Safe + Test-Friendly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Setter</strong></td>
+                        <td>فقط برای وابستگی‌های اختیاری</td>
+                        <td>قابل تغییر در runtime</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Field</strong></td>
+                        <td>هیچ‌وقت (مگر در تست‌های ساده)</td>
+                        <td>مشکلات تست، Immutability و Fails Fast</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <strong>جمله طلایی برای مصاحبه:</strong><br>
+                «من همیشه از <strong>Constructor Injection</strong> استفاده می‌کنم چون فیلدها می‌توانند
+                <code>final</code>
+                باشند، تست‌نویسی بدون Spring راحت‌تر است، Null-Safety دارد، و اگر Circular Dependency داشته باشم در زمان
+                راه‌اندازی متوجه می‌شوم. Field Injection را به‌دلیل پنهان کردن وابستگی‌ها و مشکل در تست، توصیه نمی‌کنم.»
+            </div>
+        </div>
+
+        <!-- ============================================================== -->
         <!-- ================= صفحه ۲۱: اصطلاحات پایه جاوا ================= -->
+        <!-- ============================================================== -->
+
         <div class="page">
             <div class="page-separator">
                 <span class="sep-label">صفحه ۲۱</span>
                 <span class="sep-title">اصطلاحات پایه جاوا</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۱</span> اصطلاحات پایه جاوا</h1>
-        
+
             <h2>محیط اجرا و ابزارها</h2>
             <table>
                 <thead>
@@ -2701,7 +3133,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>مفاهیم حافظه و اجرا</h2>
             <table>
                 <thead>
@@ -2754,7 +3186,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۲: اصطلاحات OOP ================= -->
         <div class="page">
             <div class="page-separator">
@@ -2762,9 +3194,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات OOP</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۲</span> اصطلاحات برنامه‌نویسی شی‌گرا</h1>
-        
+
             <h2>مفاهیم اصلی OOP</h2>
             <table>
                 <thead>
@@ -2828,7 +3260,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>روابط بین کلاس‌ها</h2>
             <table>
                 <thead>
@@ -2868,7 +3300,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>کلمات کلیدی مهم</h2>
             <table>
                 <thead>
@@ -2901,7 +3333,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۳: اصطلاحات Exception و Collections ================= -->
         <div class="page">
             <div class="page-separator">
@@ -2909,9 +3341,9 @@ public class UserController {
                 <span class="sep-title">Exception, Generics, Collections</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۳</span> اصطلاحات Exception و Collections</h1>
-        
+
             <h2>استثناها</h2>
             <table>
                 <thead>
@@ -2959,7 +3391,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>جنریک‌ها (Generics)</h2>
             <table>
                 <thead>
@@ -2995,7 +3427,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>کالکشن‌ها</h2>
             <table>
                 <thead>
@@ -3079,7 +3511,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>پیچیدگی (Big O)</h2>
             <table>
                 <thead>
@@ -3116,7 +3548,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۴: اصطلاحات Concurrency ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3124,9 +3556,9 @@ public class UserController {
                 <span class="sep-title">Concurrency و Functional</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۴</span> اصطلاحات Concurrency و Functional</h1>
-        
+
             <h2>هم‌روندی (Concurrency)</h2>
             <table>
                 <thead>
@@ -3190,7 +3622,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>برنامه‌نویسی تابعی</h2>
             <table>
                 <thead>
@@ -3259,7 +3691,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۵: اصطلاحات دیتابیس و شبکه ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3267,9 +3699,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات Database و Network</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۵</span> اصطلاحات پایگاه داده و شبکه</h1>
-        
+
             <h2>پایگاه داده</h2>
             <table>
                 <thead>
@@ -3353,7 +3785,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>شبکه</h2>
             <table>
                 <thead>
@@ -3438,7 +3870,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۶: اصطلاحات Spring Framework ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3446,9 +3878,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات Spring Framework</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۶</span> اصطلاحات Spring Framework</h1>
-        
+
             <h2>مفاهیم پایه Spring</h2>
             <table>
                 <thead>
@@ -3496,7 +3928,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>Annotationهای اصلی Spring</h2>
             <table>
                 <thead>
@@ -3572,7 +4004,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>Annotationهای MVC و REST</h2>
             <table>
                 <thead>
@@ -3629,7 +4061,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۷: اصطلاحات JPA و Hibernate ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3637,9 +4069,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات JPA و Hibernate</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۷</span> اصطلاحات JPA و Hibernate</h1>
-        
+
             <h2>مفاهیم پایه</h2>
             <table>
                 <thead>
@@ -3691,7 +4123,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>Annotationهای JPA</h2>
             <table>
                 <thead>
@@ -3751,7 +4183,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>مفاهیم مهم</h2>
             <table>
                 <thead>
@@ -3804,7 +4236,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۸: اصطلاحات امنیت ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3812,9 +4244,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات امنیت</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۸</span> اصطلاحات امنیت</h1>
-        
+
             <h2>مفاهیم پایه</h2>
             <table>
                 <thead>
@@ -3866,7 +4298,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>آسیب‌پذیری‌ها (OWASP)</h2>
             <table>
                 <thead>
@@ -3898,7 +4330,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>Spring Security</h2>
             <table>
                 <thead>
@@ -3943,7 +4375,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۲۹: اصطلاحات تست و DevOps ================= -->
         <div class="page">
             <div class="page-separator">
@@ -3951,9 +4383,9 @@ public class UserController {
                 <span class="sep-title">اصطلاحات Testing و DevOps</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۹</span> اصطلاحات Testing و DevOps</h1>
-        
+
             <h2>تست‌نویسی</h2>
             <table>
                 <thead>
@@ -4029,7 +4461,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>DevOps و ابزارها</h2>
             <table>
                 <thead>
@@ -4102,7 +4534,7 @@ public class UserController {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- ================= صفحه ۳۰: اصطلاحات Logging, Build Tools, Thymeleaf ================= -->
         <div class="page">
             <div class="page-separator">
@@ -4110,9 +4542,9 @@ public class UserController {
                 <span class="sep-title">Logging, Build Tools, Thymeleaf</span>
                 <span class="sep-line"></span>
             </div>
-        
+
             <h1><span class="phase-num">T۱۰</span> اصطلاحات Logging, Build Tools, Thymeleaf</h1>
-        
+
             <h2>لاگ‌گیری</h2>
             <table>
                 <thead>
@@ -4152,7 +4584,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>ابزارهای Build</h2>
             <table>
                 <thead>
@@ -4196,7 +4628,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>Thymeleaf و JSP</h2>
             <table>
                 <thead>
@@ -4240,7 +4672,7 @@ public class UserController {
                     </tr>
                 </tbody>
             </table>
-        
+
             <h2>مفاهیم طراحی</h2>
             <table>
                 <thead>
